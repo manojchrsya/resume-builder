@@ -1,0 +1,182 @@
+{
+  "header" : {
+    "name": "Manoj Chaurasiya",
+    "title": "Engineering Manager | Technical Lead",
+    "email": "manojchrsya@gmail.com",
+    "phone": "+91-9987492873",
+    "location": "Mumbai, Maharashtra, India",
+    "linkedin": "https://www.linkedin.com/in/manoj-chaurasiya-94305675",
+    "github": "https://github.com/manojchrsya"
+  },
+  "summary": "Backend engineering leader with 11+ years of experience designing and building high-scale distributed systems for FinTech and banking platforms. Currently serving as an Engineering Manager while continuing to lead architecture, backend development, and technical execution for third party API’s and multi-bank integration platforms. Specialized in Node.js, PostgreSQL, Kafka, Redis, AWS and event-driven architectures, with strong expertise in system design, API development, caching, observability, and production reliability. Passionate about solving complex engineering problems, mentoring teams, and delivering scalable, high-performance backend platforms.",
+  "skills": [
+    {
+      "title": "Languages",
+      "skills": ["Node.js", "JavaScript", "TypeScript", "SQL", "PHP", "Vue js"]
+    },
+    {
+      "title": "Cloud & DevOps",
+      "skills": ["AWS", "Docker", "Kubernetes", "Lambda", "Git", "GitHub Actions", "CI/CD"]
+    },
+    {
+      "title": "Technicals",
+      "skills": ["Microservices", "Distributed Architecture", "System Design", "Infra Cost Optimization", "Debugging"]
+    },
+    {
+      "title": "Frameworks & Libraries",
+      "skills": ["Adonis Js", "Express Js", "Fastify", "Nuxt Js", "Loopback"]
+    },
+    {
+      "title": "Databases & Messaging",
+      "skills": ["PostgreSQL", "Redis", "Kafka", "Elasticsearch", "MongoDB"]
+    },
+    {
+      "title": "Monitoring & Observability",
+      "skills": ["NewRelic", "CloudWatch", "Alerts and Dashboards", "Elastic APM"]
+    }
+  ],
+  "experiences": [
+    {
+      "company": "novio",
+      "url": "https://www.novio.in/",
+      "location": "Mumbai, Maharashtra, India",
+      "duration": "Nov 2021 — Present",
+      "designations": [
+        {
+          "title": "Engineering Manager",
+          "current": true,
+          "promoted": true,
+          "duration": "Aug 2021 — Present",
+          "responsibilities": [
+            "Leading a cross-functional engineering POD of 6 personnel.",
+            "Led the hiring and technical interview process for Tech Support and Software Development roles.",
+            "Architected scalable APIs and workflows handling high-concurrency onboarding and transaction flows with strict reliability requirements.",
+            "Led cloud architecture on AWS, including RDS, ElastiCache, EC2, Lambda, improving system reliability and reducing infrastructure cost.",
+            "Designed observability strategy using NewRelic and logs metrics to detect and prevent production incidents.",
+            "Managed the tech support team, improved TAT and ensured timely resolution with engineering teams.",
+            "Own technical architecture, sprint planning, delivery, and production stability for banking integration platform.",
+            "Mentored engineers on system design, code quality, and best practices to improve team performance and technical excellence."
+          ]
+        },
+        {
+          "title": "Tech Lead",
+          "duration": "Nov 2021 — Jul 2025",
+          "responsibilities": [
+            "Designed and owned backend architecture for a multi-bank FinTech platform supporting credit cards and personal loan journeys across multiple lenders.",
+            "Led API performance optimization by tuning PostgreSQL queries and implementing Redis caching, resulting in faster response times and improved database efficiency.",
+            "Strengthened API reliability and security by introducing rate limiting and scalability enhancements, supporting 1.5M+ daily requests with high availability.",
+            "Architected a background report processing system to reduce download time using Queues and Kafka.",
+            "Mentored junior developers through code reviews, pair programming sessions, and internal tech talks.",
+            "Improved system scalability with asynchronous processing and queue-based architecture."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Mahindra First Choice Services",
+      "location": "Mumbai, Maharashtra, India",
+      "duration": "Dec 2016 — Oct 2021",
+      "designations": [
+        {
+          "title": "Lead Software Engineer",
+          "duration": "Dec 2016 — Oct 2021",
+          "responsibilities": [
+            "Analyzed business requirements and translated them into scalable, high-quality technical solutions.",
+            "Designed and optimized database schemas, secure and high-performance RESTful APIs, and system architecture for scalability and maintainability.",
+            "Architected and implemented the DearO Admin Panel using Nuxt.js, establishing a scalable and maintainable project structure.",
+            "Provided technical guidance and mentorship to team members, assisting in solution design, code quality, and troubleshooting.",
+            "Conducted peer code reviews to enforce coding standards, improve code quality, and promote knowledge sharing across the team.",
+            "Collaborated with cross-functional teams, including Product, QA and Design to deliver features on time and maintain high engineering standards."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Ambab",
+      "location": "Mumbai, Maharashtra, India",
+      "duration": "Sep 2015 — Dec 2016",
+      "designations": [
+        {
+          "title": "Sr. Software Developer",
+          "responsibilities": [
+            "Developed RESTful APIs using PHP and MySQL, ensuring high performance and scalability.",
+            "Designed, developed, and maintained scalable backend services and business-critical features based on functional and technical requirements.",
+            "Designed and implemented secure, high-performance RESTful APIs for mobile and web applications.",
+            "Designed and optimized database schemas, API contracts, and system architecture to ensure scalability, maintainability, and performance."
+          ]
+        }
+      ]
+      
+    },
+    {
+      "company": "PSP Marketing",
+      "location": "Mumbai, Maharashtra, India",
+      "duration": "May 2014 — Sep 2015",
+      "designations": [
+        {
+          "title": "PHP Developer",
+          "responsibilities": [
+            "Developed Web applications using PHP and MySQL, ensuring high performance and scalability.",
+            "Payment gateway integration and transaction management for e-commerce platforms.",
+            "Designed and optimized database schemas, API contracts, and system architecture to ensure scalability, maintainability, and performance."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Postbox Communication",
+      "location": "Mumbai, Maharashtra, India",
+      "duration": "Feb 2013 — May 2014",
+      "designations": [
+        {
+          "title": "PHP Developer",
+          "responsibilities": [
+            "Developed Web applications using PHP and MySQL, ensuring high performance and scalability.",
+            "Maintained and enhanced existing applications, troubleshooting issues and implementing new features as required.",
+            "Collaborated with cross-functional teams to gather requirements, design solutions, and deliver high-quality software on time."
+          ]
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "novio – D2C Secured and Non Secured Credit Card & Rewards Platform",
+      "description": "Built and enhanced a D2C fintech platform enabling customers to apply for FD-backed credit cards, perform CRIF bureau checks, complete digital onboarding, and redeem reward points for vouchers. Designed scalable backend services, payment workflows, banking integrations, and observability solutions.",
+      "techStack": ["Node.js", "TypeScript", "PostgreSQL", "Redis", "Kafka", "AWS", "Kubernetes", "New Relic"]
+    },
+    {
+      "name": "Credilio – FinTech Credit Cards & Personal Loans Platform",
+      "description": "Developed and maintained a multi-bank platform integrating credit card and personal loan journeys across banks, NBFCs, and financial partners. Designed REST APIs, optimized database performance, implemented asynchronous processing, and led cloud infrastructure improvements.",
+      "techStack": ["Node.js", "PostgreSQL", "Redis", "Kafka", "AWS", "Docker", "Lambda", "Kubernetes", "New Relic"]
+    },
+    {
+      "name": "DearO – Workshop Management System",
+      "description": "Architected and developed a cloud-based workshop management platform for automobile service centers to manage customers, job cards, inventory, invoicing, employee operations, and service workflows. Designed the complete application architecture, database schema, REST APIs, and Admin Panel.",
+      "techStack": ["Node.js", "JavaScript", "Loopback", "Redis", "MongoDB", "ElasticSearch", "Nuxt.js", "AWS"]
+    }
+  ],
+  "educations": [
+    {
+      "title": "Bachelor of Engineering — Computer Science",
+      "institution": "S.S.P.M College of Engineering and Technology, University of Mumbai",
+      "location": "Raigad, Maharashtra, India",
+      "year": "Graduated May 2011",
+      "percentage": "61.37%"
+    },
+    {
+      "title": "Higher Secondary Certificate",
+      "institution": "Abhinav Vidya Mandir, Maharashtra Board",
+      "location": "Mumbai, Maharashtra, India",
+      "year": "Jun 2007",
+      "percentage": "73.67%"
+    },
+    {
+      "title": "Secondary School Certificate",
+      "institution": "National High School, Maharashtra Board",
+      "location": "Mumbai, Maharashtra, India",
+      "year": "Mar 2005",
+      "percentage": "74.80%"
+    }
+  ]
+}

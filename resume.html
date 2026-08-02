@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manoj Chaurasiya — Resume</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #1a3a5c;
+    --rule:   #1a3a5c;
+    --text:   #1c1c1c;
+    --muted:  #000000;
+    --light:  #777777;
+    --page-w: 780px;
+  }
+
+  body {
+    background: #e8e8e8;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    width: var(--page-w);
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .toolbar-hint {
+    font-size: 12px;
+    color: #555;
+    font-family: 'Lato', sans-serif;
+  }
+  .toolbar-actions { display: flex; gap: 8px; }
+  .btn {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    border-radius: 5px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: opacity .15s ease;
+  }
+  .btn:hover { opacity: .85; }
+  .btn.secondary {
+    background: #fff;
+    color: var(--accent);
+  }
+  .btn.tiny {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+  .btn.danger {
+    background: #fff;
+    color: #b3261e;
+    border-color: #e0b4b0;
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    width: var(--page-w);
+    min-height: 1100px;
+    margin: 14px auto 32px;
+    background: #fff;
+    box-shadow: 0 4px 32px rgba(0,0,0,.18);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--accent);
+    padding: 28px 36px 24px;
+    color: #fff;
+  }
+  .header-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  .header-title {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    margin-bottom: 14px;
+  }
+  .header-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,.85);
+  }
+  .header-contact span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .header-contact svg {
+    width: 12px;
+    height: 12px;
+    fill: rgba(255,255,255,.65);
+    flex-shrink: 0;
+  }
+
+  /* ── BODY ── */
+  .body { padding: 24px 36px 36px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 20px; }
+  .section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 5px;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  /* ── SUMMARY ── */
+  .summary p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    text-align: justify;
+  }
+
+  /* ── EXPERIENCE ── */
+  .entry { margin-bottom: 14px; position: relative; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .entry-role {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .entry-date {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--light);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .entry-org {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 5px;
+    text-decoration: none;
+  }
+  .entry-location {
+    font-size: 11.5px;
+    color: var(--light);
+  }
+  .entry ul {
+    padding-left: 16px;
+    margin-top: 5px;
+  }
+  .entry ul li {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 3px;
+    line-height: 1.6;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .entry ul li::marker { display: none; content: ''; }
+  .entry ul { list-style: none; }
+  .entry ul li::before {
+    content: '•';
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .li-text { flex: 1; }
+
+  /* ── EDUCATION ── */
+  .edu-entry { margin-bottom: 12px; position: relative; }
+  .edu-entry:last-child { margin-bottom: 0; }
+  .edu-degree {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .edu-school {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .edu-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: var(--light);
+    margin-top: 1px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 24px;
+  }
+  .skill-group { position: relative; }
+  .skill-group-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .skill-tag {
+    font-size: 11px;
+    color: var(--muted);
+    background: #f0f3f7;
+    border: 1px solid #dde2ea;
+    padding: 2px 8px;
+    border-radius: 3px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ── CERTIFICATIONS / PROJECTS ── */
+  .cert-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 7px;
+    padding-bottom: 7px;
+    border-bottom: 1px dashed #e8e8e8;
+    position: relative;
+  }
+  .cert-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .cert-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .cert-issuer {
+    font-size: 13px;
+    color: var(--accent);
+  }
+
+  /* ── EDITABLE AFFORDANCES ── */
+  [contenteditable="true"] {
+    outline: none;
+    border-radius: 3px;
+    transition: background .12s ease, box-shadow .12s ease;
+  }
+  [contenteditable="true"]:hover {
+    background: rgba(26,58,92,.06);
+  }
+  [contenteditable="true"]:focus {
+    background: #fffbe6;
+    box-shadow: 0 0 0 1px #e3c66a;
+  }
+
+  .add-row { display: flex; justify-content: flex-end; margin-top: 6px; }
+  .remove-btn {
+    border: none;
+    background: transparent;
+    color: #b3261e;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1;
+    padding: 0 2px;
+    opacity: .55;
+  }
+  .remove-btn:hover { opacity: 1; }
+  .entry-remove {
+    position: absolute;
+    top: 0;
+    right: -22px;
+  }
+  .skill-tag .remove-btn { font-size: 11px; }
+  .cert-remove { position: absolute; top: 0; right: -22px; }
+  .edu-remove { position: absolute; top: 0; right: -22px; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: #eaeaea;
+    margin: 4px 0 20px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; width: 100%; }
+    .toolbar, .add-row, .remove-btn, .entry-remove, .cert-remove, .edu-remove { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-hint">Click any text to edit it. Use the + buttons to add new entries. Changes save automatically.</div>
+  <div class="toolbar-actions">
+    <button class="btn secondary" id="resetBtn">Reset Data</button>
+    <button class="btn" id="downloadCsvBtn">Download as CSV</button>
+  </div>
+</div>
+
+<div class="page" id="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="header-name" contenteditable="true" data-path="header.name"></div>
+    <div class="header-title" contenteditable="true" data-path="header.title"></div>
+    <div class="header-contact">
+      <span>
+        <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+        <span contenteditable="true" data-path="header.email"></span>
+      </span>
+      <span>
+        <svg viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+        <span contenteditable="true" data-path="header.phone"></span>
+      </span>
+      <span>
+        <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        <span contenteditable="true" data-path="header.location"></span>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M19 0H5a5 5 0 00-5 5v14a5 5 0 005 5h14a5 5 0 005-5V5a5 5 0 00-5-5zM8 19H5V8h3v11zM6.5 6.7A1.8 1.8 0 114.7 5a1.8 1.8 0 011.8 1.7zM20 19h-3v-5.6c0-1.3-.5-2.2-1.6-2.2a1.7 1.7 0 00-1.6 1.2 2.2 2.2 0 000 .8V19h-3V8h3v1.5a3.2 3.2 0 012.9-1.6c2.1 0 3.3 1.4 3.3 4.3V19z"/></svg>
+        <span contenteditable="true" data-path="header.linkedin"></span>
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.74-1.33-1.74-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span contenteditable="true" data-path="header.github"></span>
+      </span>
+    </div>
+  </header>
+
+  <!-- ── BODY ── -->
+  <div class="body">
+
+    <!-- SUMMARY -->
+    <div class="section summary">
+      <div class="section-title-row"><div class="section-title">Professional Summary</div></div>
+      <p contenteditable="true" data-path="summary"></p>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section">
+      <div class="section-title-row">
+        <div class="section-title">Skills</div>
+        <button class="btn tiny secondary" data-action="add-skill-group">+ Add Group</button>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+      <div class="section-title-row">
+        <div class="section-title">Work Experience</div>
+        <button class="btn tiny secondary" data-action="add-experience">+ Add Company</button>
+      </div>
+      <div id="experienceList"></div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="section">
+      <div class="section-title-row">
+        <div class="section-title">Key Projects</div>
+        <button class="btn tiny secondary" data-action="add-project">+ Add Project</button>
+      </div>
+      <div id="projectsList"></div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+      <div class="section-title-row">
+        <div class="section-title">Education</div>
+        <button class="btn tiny secondary" data-action="add-education">+ Add Education</button>
+      </div>
+      <div id="educationList"></div>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /page -->
+
+<script>
+(function () {
+  var STORAGE_KEY = 'resumeData_v1';
+
+  var defaultData = {
+    header: {
+      name: "Manoj Chaurasiya",
+      title: "Engineering Manager | Technical Lead",
+      email: "manojchrsya@gmail.com",
+      phone: "+91 9987492873",
+      location: "Mumbai, Maharashtra, India",
+      linkedin: "https://www.linkedin.com/in/manoj-chaurasiya-94305675",
+      github: "https://github.com/manojchrsya"
+    },
+    summary: "Backend engineering leader with 11+ years of experience designing and building high-scale distributed systems for FinTech and banking platforms. Currently serving as an Engineering Manager while continuing to lead architecture, backend development, and technical execution for third party API\u2019s and multi-bank integration platforms. Specialized in Node.js, PostgreSQL, Kafka, Redis, AWS and event-driven architectures, with strong expertise in system design, API development, caching, observability, and production reliability. Passionate about solving complex engineering problems, mentoring teams, and delivering scalable, high-performance backend platforms.",
+    skills: [
+      { title: "Languages", skills: ["Node.js", "JavaScript", "TypeScript", "SQL", "PHP", "Vue js"] },
+      { title: "Frameworks & Libraries", skills: ["Adonis Js", "Express Js", "Fastify", "Nuxt Js", "Loopback"] },
+      { title: "Cloud & DevOps", skills: ["AWS", "Docker", "Kubernetes", "Lambda", "Git", "GitHub Actions", "CI/CD"] },
+      { title: "Databases & Messaging", skills: ["PostgreSQL", "Redis", "Kafka", "Elasticsearch", "MongoDB"] },
+      { title: "Technicals", skills: ["Microservices", "Distributed Architecture", "System Design", "Infra Cost Optimization", "Debugging"] },
+      { title: "Monitoring & Observability", skills: ["NewRelic", "CloudWatch", "Alerts and Dashboards", "Elastic APM"] }
+    ],
+    experience: [
+      {
+        company: "novio",
+        url: "https://www.novio.in/",
+        location: "Mumbai, Maharashtra, India",
+        duration: "Nov 2021 — Present",
+        designations: [
+          {
+            title: "Engineering Manager",
+            duration: "Aug 2025 — Present",
+            promoted: true,
+            responsibilities: [
+              "Leading a cross-functional engineering POD of 6 personnel.",
+              "Led the hiring and technical interview process for Tech Support and Software Development roles.",
+              "Architected scalable APIs and workflows handling high-concurrency onboarding and transaction flows with strict reliability requirements.",
+              "Led cloud architecture on AWS, including RDS, ElastiCache, EC2, Lambda, improving system reliability and reducing infrastructure cost.",
+              "Designed observability strategy using NewRelic and logs metrics to detect and prevent production incidents.",
+              "Managed the tech support team, improved TAT and ensured timely resolution with engineering teams.",
+              "Own technical architecture, sprint planning, delivery, and production stability for banking integration platform.",
+              "Mentored engineers on system design, code quality, and best practices to improve team performance and technical excellence."
+            ]
+          },
+          {
+            title: "Tech Lead",
+            duration: "Nov 2021 — Jul 2025",
+            promoted: false,
+            responsibilities: [
+              "Designed and owned backend architecture for a multi-bank FinTech platform supporting credit cards and personal loan journeys across multiple lenders.",
+              "Led API performance optimization by tuning PostgreSQL queries and implementing Redis caching, resulting in faster response times and improved database efficiency.",
+              "Strengthened API reliability and security by introducing rate limiting and scalability enhancements, supporting 1.5M+ daily requests with high availability.",
+              "Architected a background report processing system to reduce download time using Queues and Kafka.",
+              "Mentored junior developers through code reviews, pair programming sessions, and internal tech talks.",
+              "Improved system scalability with asynchronous processing and queue-based architecture."
+            ]
+          }
+        ]
+      },
+      {
+        company: "Mahindra First Choice Services",
+        url: "",
+        location: "Mumbai, Maharashtra, India",
+        duration: "Dec 2016 — Oct 2021",
+        designations: [
+          {
+            title: "Lead Software Engineer",
+            duration: "Dec 2016 — Oct 2021",
+            promoted: false,
+            responsibilities: [
+              "Analyzed business requirements and translated them into scalable, high-quality technical solutions.",
+              "Designed and optimized database schemas, secure and high-performance RESTful APIs, and system architecture for scalability and maintainability.",
+              "Architected and implemented the DearO Admin Panel using Nuxt.js, establishing a scalable and maintainable project structure.",
+              "Provided technical guidance and mentorship to team members, assisting in solution design, code quality, and troubleshooting.",
+              "Conducted peer code reviews to enforce coding standards, improve code quality, and promote knowledge sharing across the team.",
+              "Collaborated with cross-functional teams, including Product, QA and Design to deliver features on time and maintain high engineering standards."
+            ]
+          }
+        ]
+      },
+      {
+        company: "Ambab",
+        url: "",
+        location: "Mumbai, Maharashtra, India",
+        duration: "Sep 2015 — Dec 2016",
+        designations: [
+          {
+            title: "Sr. Software Developer",
+            duration: "",
+            promoted: false,
+            responsibilities: [
+              "Developed RESTful APIs using PHP and MySQL, ensuring high performance and scalability.",
+              "Designed, developed, and maintained scalable backend services and business-critical features based on functional and technical requirements.",
+              "Designed and implemented secure, high-performance RESTful APIs for mobile and web applications.",
+              "Designed and optimized database schemas, API contracts, and system architecture to ensure scalability, maintainability, and performance."
+            ]
+          }
+        ]
+      },
+      {
+        company: "PSP Marketing",
+        url: "",
+        location: "Mumbai, Maharashtra, India",
+        duration: "May 2014 — Sep 2015",
+        designations: [
+          {
+            title: "PHP Developer",
+            duration: "",
+            promoted: false,
+            responsibilities: [
+              "Developed Web applications using PHP and MySQL, ensuring high performance and scalability.",
+              "Payment gateway integration and transaction management for e-commerce platforms.",
+              "Designed and optimized database schemas, API contracts, and system architecture to ensure scalability, maintainability, and performance."
+            ]
+          }
+        ]
+      },
+      {
+        company: "Postbox Communication",
+        url: "",
+        location: "Mumbai, Maharashtra, India",
+        duration: "Feb 2013 — May 2014",
+        designations: [
+          {
+            title: "PHP Developer",
+            duration: "",
+            promoted: false,
+            responsibilities: [
+              "Developed Web applications using PHP and MySQL, ensuring high performance and scalability.",
+              "Maintained and enhanced existing applications, troubleshooting issues and implementing new features as required.",
+              "Collaborated with cross-functional teams to gather requirements, design solutions, and deliver high-quality software on time."
+            ]
+          }
+        ]
+      }
+    ],
+    projects: [
+      {
+        name: "novio – D2C Secured and Non Secured Credit Card & Rewards Platform",
+        description: "Built and enhanced a D2C fintech platform enabling customers to apply for FD-backed credit cards, perform CRIF bureau checks, complete digital onboarding, and redeem reward points for vouchers. Designed scalable backend services, payment workflows, banking integrations, and observability solutions.",
+        techStack: ["Node.js", "TypeScript", "PostgreSQL", "Redis", "Kafka", "AWS", "Kubernetes", "New Relic"]
+      },
+      {
+        name: "Credilio – FinTech Credit Cards & Personal Loans Platform",
+        description: "Developed and maintained a multi-bank platform integrating credit card and personal loan journeys across banks, NBFCs, and financial partners. Designed REST APIs, optimized database performance, implemented asynchronous processing, and led cloud infrastructure improvements.",
+        techStack: ["Node.js", "PostgreSQL", "Redis", "Kafka", "AWS", "Docker", "Lambda", "Kubernetes", "New Relic"]
+      },
+      {
+        name: "DearO – Workshop Management System",
+        description: "Architected and developed a cloud-based workshop management platform for automobile service centers to manage customers, job cards, inventory, invoicing, employee operations, and service workflows. Designed the complete application architecture, database schema, REST APIs, and Admin Panel.",
+        techStack: ["Node.js", "JavaScript", "Loopback", "Redis", "MongoDB", "ElasticSearch", "Nuxt.js", "AWS"]
+      }
+    ],
+    education: [
+      {
+        title: "Bachelor of Engineering — Computer Science",
+        institution: "S.S.P.M College of Engineering and Technology, University of Mumbai",
+        location: "Raigad, Maharashtra, India",
+        year: "Graduated May 2011",
+        percentage: "61.37%"
+      },
+      {
+        title: "Higher Secondary Certificate",
+        institution: "Abhinav Vidya Mandir, Maharashtra Board",
+        location: "Mumbai, Maharashtra, India",
+        year: "Jun 2007",
+        percentage: "73.67%"
+      },
+      {
+        title: "Secondary School Certificate",
+        institution: "National High School, Maharashtra Board",
+        location: "Mumbai, Maharashtra, India",
+        year: "Mar 2005",
+        percentage: "74.80%"
+      }
+    ]
+  };
+
+  var data = loadData();
+
+  function loadData() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) { /* ignore corrupt storage */ }
+    return JSON.parse(JSON.stringify(defaultData));
+  }
+
+  function saveData() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.error('Could not save to localStorage', e);
+    }
+  }
+
+  function esc(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // ---- Path get/set helper (supports a.b[0].c) ----
+  function getAtPath(obj, path) {
+    var parts = path.replace(/\[(\d+)\]/g, '.$1').split('.');
+    var cur = obj;
+    for (var i = 0; i < parts.length; i++) {
+      if (cur == null) return undefined;
+      cur = cur[parts[i]];
+    }
+    return cur;
+  }
+  function setAtPath(obj, path, value) {
+    var parts = path.replace(/\[(\d+)\]/g, '.$1').split('.');
+    var cur = obj;
+    for (var i = 0; i < parts.length - 1; i++) {
+      cur = cur[parts[i]];
+    }
+    cur[parts[parts.length - 1]] = value;
+  }
+
+  // ---- Renderers ----
+  function renderAll() {
+    renderHeaderAndSummary();
+    renderSkills();
+    renderExperience();
+    renderProjects();
+    renderEducation();
+  }
+
+  function renderHeaderAndSummary() {
+    setText('[data-path="header.name"]', data.header.name);
+    setText('[data-path="header.title"]', data.header.title);
+    setText('[data-path="header.email"]', data.header.email);
+    setText('[data-path="header.phone"]', data.header.phone);
+    setText('[data-path="header.location"]', data.header.location);
+    setText('[data-path="header.linkedin"]', data.header.linkedin);
+    setText('[data-path="header.github"]', data.header.github);
+    setText('[data-path="summary"]', data.summary);
+  }
+  function setText(selector, value) {
+    var el = document.querySelector(selector);
+    if (el && el.textContent !== value) el.textContent = value;
+  }
+
+  function renderSkills() {
+    var grid = document.getElementById('skillsGrid');
+    var html = '';
+    data.skills.forEach(function (group, gi) {
+      html += '<div class="skill-group">';
+      html += '<div class="skill-group-name" contenteditable="true" data-path="skills[' + gi + '].title">' + esc(group.title) + '</div>';
+      html += '<div class="skill-tags">';
+      group.skills.forEach(function (tag, ti) {
+        html += '<span class="skill-tag"><span contenteditable="true" data-path="skills[' + gi + '].skills[' + ti + ']">' + esc(tag) + '</span>' +
+                '<button class="remove-btn" title="Remove skill" data-action="remove-skill" data-gi="' + gi + '" data-ti="' + ti + '">&times;</button></span>';
+      });
+      html += '</div>';
+      html += '<div class="add-row">' +
+              '<button class="btn tiny secondary" data-action="add-skill" data-gi="' + gi + '">+ Skill</button>&nbsp;' +
+              '<button class="btn tiny danger" data-action="remove-skill-group" data-gi="' + gi + '">Remove Group</button>' +
+              '</div>';
+      html += '</div>';
+    });
+    grid.innerHTML = html;
+  }
+
+  function renderExperience() {
+    var list = document.getElementById('experienceList');
+    var html = '';
+    data.experience.forEach(function (exp, ei) {
+      html += '<div class="entry">';
+      html += '<button class="remove-btn entry-remove" title="Remove company" data-action="remove-experience" data-ei="' + ei + '">&times;</button>';
+      html += '<div class="entry-header" style="margin-bottom:6px;">';
+      html += '<div class="entry-org" style="font-style:normal; font-weight:700; font-size:13.5px; color:var(--text);">' +
+              '<span contenteditable="true" data-path="experience[' + ei + '].company">' + esc(exp.company) + '</span>' +
+              ' &nbsp;·&nbsp; <span style="font-weight:400; font-size:12px; color:var(--light);" contenteditable="true" data-path="experience[' + ei + '].location">' + esc(exp.location) + '</span></div>';
+      html += '<div class="entry-date" contenteditable="true" data-path="experience[' + ei + '].duration">' + esc(exp.duration) + '</div>';
+      html += '</div>';
+
+      exp.designations.forEach(function (des, di) {
+        var isLast = di === exp.designations.length - 1;
+        var borderColor = di === 0 ? 'var(--accent)' : '#d1d5db';
+        html += '<div style="padding-left:14px; border-left:2px solid ' + borderColor + '; margin-bottom:' + (isLast ? '2px' : '10px') + '; position:relative;">';
+        html += '<button class="remove-btn" style="position:absolute; top:0; right:-20px;" title="Remove role" data-action="remove-designation" data-ei="' + ei + '" data-di="' + di + '">&times;</button>';
+        html += '<div class="entry-header">';
+        html += '<div style="display:flex; align-items:center; gap:8px;">';
+        html += '<div class="entry-role" contenteditable="true" data-path="experience[' + ei + '].designations[' + di + '].title">' + esc(des.title) + '</div>';
+        if (des.promoted) {
+          html += '<span style="font-size:10px; font-weight:700; background:#e8f0fe; color:#1a3a5c; padding:1px 7px; border-radius:3px; letter-spacing:.5px; text-transform:uppercase;">Promoted</span>';
+        }
+        html += '</div>';
+        html += '<div class="entry-date" contenteditable="true" data-path="experience[' + ei + '].designations[' + di + '].duration">' + esc(des.duration) + '</div>';
+        html += '</div>';
+        html += '<ul>';
+        des.responsibilities.forEach(function (resp, ri) {
+          html += '<li><span class="li-text" contenteditable="true" data-path="experience[' + ei + '].designations[' + di + '].responsibilities[' + ri + ']">' + esc(resp) + '</span>' +
+                  '<button class="remove-btn" title="Remove line" data-action="remove-responsibility" data-ei="' + ei + '" data-di="' + di + '" data-ri="' + ri + '">&times;</button></li>';
+        });
+        html += '</ul>';
+        html += '<div class="add-row"><button class="btn tiny secondary" data-action="add-responsibility" data-ei="' + ei + '" data-di="' + di + '">+ Line</button></div>';
+        html += '</div>';
+      });
+
+      html += '<div class="add-row"><button class="btn tiny secondary" data-action="add-designation" data-ei="' + ei + '">+ Role at this company</button></div>';
+      html += '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  function renderProjects() {
+    var list = document.getElementById('projectsList');
+    var html = '';
+    data.projects.forEach(function (proj, pi) {
+      html += '<div class="cert-entry">';
+      html += '<button class="remove-btn cert-remove" title="Remove project" data-action="remove-project" data-pi="' + pi + '">&times;</button>';
+      html += '<div style="width:100%;">';
+      html += '<div class="cert-name" contenteditable="true" data-path="projects[' + pi + '].name">' + esc(proj.name) + '</div>';
+      html += '<div class="cert-issuer" contenteditable="true" data-path="projects[' + pi + '].description">' + esc(proj.description) + '</div>';
+      html += '<div style="margin-top:4px;"><strong>Tech Stack:</strong> <span contenteditable="true" data-path="projects[' + pi + '].techStack" data-list="comma">' + esc(proj.techStack.join(', ')) + '</span></div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  function renderEducation() {
+    var list = document.getElementById('educationList');
+    var html = '';
+    data.education.forEach(function (edu, edi) {
+      html += '<div class="edu-entry">';
+      html += '<button class="remove-btn edu-remove" title="Remove education" data-action="remove-education" data-edi="' + edi + '">&times;</button>';
+      html += '<div class="edu-degree" contenteditable="true" data-path="education[' + edi + '].title">' + esc(edu.title) + '</div>';
+      html += '<div class="edu-school" contenteditable="true" data-path="education[' + edi + '].institution">' + esc(edu.institution) + '</div>';
+      html += '<div class="edu-meta">' +
+              '<span contenteditable="true" data-path="education[' + edi + '].location">' + esc(edu.location) + '</span>' +
+              '<span><span contenteditable="true" data-path="education[' + edi + '].year">' + esc(edu.year) + '</span> &nbsp;·&nbsp; Scored <span contenteditable="true" data-path="education[' + edi + '].percentage">' + esc(edu.percentage) + '</span></span>' +
+              '</div>';
+      html += '</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  // ---- Editing: update model on input, without full re-render ----
+  document.addEventListener('input', function (e) {
+    var el = e.target;
+    if (!el.hasAttribute || !el.hasAttribute('contenteditable')) return;
+    var path = el.getAttribute('data-path');
+    if (!path) return;
+    var value = el.textContent;
+    if (el.getAttribute('data-list') === 'comma') {
+      value = value.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    }
+    setAtPath(data, path, value);
+    saveData();
+  });
+
+  // ---- Structural actions ----
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    var action = btn.getAttribute('data-action');
+
+    if (action === 'add-skill-group') {
+      data.skills.push({ title: 'New Skill Group', skills: ['New Skill'] });
+    } else if (action === 'remove-skill-group') {
+      data.skills.splice(+btn.dataset.gi, 1);
+    } else if (action === 'add-skill') {
+      data.skills[+btn.dataset.gi].skills.push('New Skill');
+    } else if (action === 'remove-skill') {
+      data.skills[+btn.dataset.gi].skills.splice(+btn.dataset.ti, 1);
+
+    } else if (action === 'add-experience') {
+      data.experience.push({
+        company: 'New Company', url: '', location: 'City, Country', duration: 'Mon YYYY — Present',
+        designations: [{ title: 'Job Title', duration: 'Mon YYYY — Present', promoted: false, responsibilities: ['Describe an achievement or responsibility.'] }]
+      });
+    } else if (action === 'remove-experience') {
+      data.experience.splice(+btn.dataset.ei, 1);
+    } else if (action === 'add-designation') {
+      data.experience[+btn.dataset.ei].designations.unshift({ title: 'New Role', duration: 'Mon YYYY — Present', promoted: true, responsibilities: ['Describe an achievement or responsibility.'] });
+    } else if (action === 'remove-designation') {
+      data.experience[+btn.dataset.ei].designations.splice(+btn.dataset.di, 1);
+    } else if (action === 'add-responsibility') {
+      data.experience[+btn.dataset.ei].designations[+btn.dataset.di].responsibilities.push('New line item.');
+    } else if (action === 'remove-responsibility') {
+      data.experience[+btn.dataset.ei].designations[+btn.dataset.di].responsibilities.splice(+btn.dataset.ri, 1);
+
+    } else if (action === 'add-project') {
+      data.projects.push({ name: 'New Project', description: 'Describe the project.', techStack: ['Tech'] });
+    } else if (action === 'remove-project') {
+      data.projects.splice(+btn.dataset.pi, 1);
+
+    } else if (action === 'add-education') {
+      data.education.push({ title: 'Degree / Certificate', institution: 'Institution Name', location: 'City, Country', year: 'Year', percentage: '' });
+    } else if (action === 'remove-education') {
+      data.education.splice(+btn.dataset.edi, 1);
+    } else {
+      return;
+    }
+
+    saveData();
+    renderAll();
+  });
+
+  // ---- Reset ----
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    if (!confirm('Reset all edits back to the original resume data? This cannot be undone.')) return;
+    data = JSON.parse(JSON.stringify(defaultData));
+    saveData();
+    renderAll();
+  });
+
+  // ---- CSV export ----
+  function csvEscape(val) {
+    var s = String(val == null ? '' : val);
+    if (/[",\n]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function buildCsv() {
+    var rows = [['Section', 'Field 1', 'Field 2', 'Field 3', 'Field 4']];
+
+    rows.push(['Personal Info', 'Name', data.header.name, '', '']);
+    rows.push(['Personal Info', 'Title', data.header.title, '', '']);
+    rows.push(['Personal Info', 'Email', data.header.email, '', '']);
+    rows.push(['Personal Info', 'Phone', data.header.phone, '', '']);
+    rows.push(['Personal Info', 'Location', data.header.location, '', '']);
+    rows.push(['Personal Info', 'LinkedIn', data.header.linkedin, '', '']);
+    rows.push(['Personal Info', 'GitHub', data.header.github, '', '']);
+
+    rows.push(['Summary', '', data.summary, '', '']);
+
+    data.skills.forEach(function (g) {
+      rows.push(['Skills', g.title, g.skills.join('; '), '', '']);
+    });
+
+    data.experience.forEach(function (exp) {
+      exp.designations.forEach(function (des) {
+        rows.push(['Experience', exp.company, des.title, des.responsibilities.join(' | '), des.duration]);
+      });
+    });
+
+    data.projects.forEach(function (p) {
+      rows.push(['Project', p.name, p.techStack.join(', '), p.description, '']);
+    });
+
+    data.education.forEach(function (edu) {
+      rows.push(['Education', edu.title, edu.institution, edu.location, edu.year + (edu.percentage ? ' - ' + edu.percentage : '')]);
+    });
+
+    return rows.map(function (r) { return r.map(csvEscape).join(','); }).join('\r\n');
+  }
+
+  document.getElementById('downloadCsvBtn').addEventListener('click', function () {
+    var csv = buildCsv();
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var fileName = (data.header.name || 'resume').trim().replace(/\s+/g, '_') + '_resume.csv';
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

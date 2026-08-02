@@ -1,0 +1,308 @@
+@import './base.css';
+
+/* ── TOOLBAR ── */
+.toolbar {
+  width: var(--page-w);
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.toolbar-hint {
+  font-size: 12px;
+  color: #555;
+  font-family: 'Lato', sans-serif;
+}
+.toolbar-actions { display: flex; gap: 8px; }
+.btn {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  border-radius: 5px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: opacity .15s ease;
+}
+.btn:hover { opacity: .85; }
+.btn.secondary {
+  background: #fff;
+  color: var(--accent);
+}
+.btn.tiny {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+.btn.danger {
+  background: #fff;
+  color: #b3261e;
+  border-color: #e0b4b0;
+}
+
+/* ── PAGE WRAPPER ── */
+.page {
+  width: var(--page-w);
+  min-height: 1100px;
+  margin: 14px auto 32px;
+  background: #fff;
+  box-shadow: 0 4px 32px rgba(0,0,0,.18);
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--accent);
+  padding: 28px 36px 24px;
+  color: #fff;
+}
+.header-name {
+  font-family: 'EB Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  color: #fff;
+}
+.header-title {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.75);
+  margin-bottom: 14px;
+}
+.header-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255,255,255,.85);
+}
+.header-contact span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.header-contact svg {
+  width: 12px;
+  height: 12px;
+  fill: rgba(255,255,255,.65);
+  flex-shrink: 0;
+}
+
+/* ── BODY ── */
+.body { padding: 24px 36px 36px; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 20px; }
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--rule);
+  padding-bottom: 5px;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── SUMMARY ── */
+.summary p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* ── EXPERIENCE ── */
+.entry { margin-bottom: 14px; position: relative; }
+.entry:last-child { margin-bottom: 0; }
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.entry-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.entry-date {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.entry-org {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--accent);
+  font-style: italic;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+.entry-location {
+  font-size: 11.5px;
+  color: var(--light);
+}
+.entry ul {
+  padding-left: 16px;
+  margin-top: 5px;
+}
+.entry ul li {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 3px;
+  line-height: 1.6;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.entry ul li::marker { display: none; content: ''; }
+.entry ul { list-style: none; }
+.entry ul li::before {
+  content: '•';
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.li-text { flex: 1; }
+
+/* ── EDUCATION ── */
+.edu-entry { margin-bottom: 12px; position: relative; }
+.edu-entry:last-child { margin-bottom: 0; }
+.edu-degree {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text);
+}
+.edu-school {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--accent);
+  font-style: italic;
+}
+.edu-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--light);
+  margin-top: 1px;
+}
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+}
+.skill-group { position: relative; }
+.skill-group-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.skill-tag {
+  font-size: 11px;
+  color: var(--muted);
+  background: #f0f3f7;
+  border: 1px solid #dde2ea;
+  padding: 2px 8px;
+  border-radius: 3px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── CERTIFICATIONS / PROJECTS ── */
+.cert-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
+  border-bottom: 1px dashed #e8e8e8;
+  position: relative;
+}
+.cert-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.cert-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.cert-issuer {
+  font-size: 13px;
+  color: var(--accent);
+}
+
+/* ── EDITABLE AFFORDANCES ── */
+[contenteditable="true"] {
+  outline: none;
+  border-radius: 3px;
+  transition: background .12s ease, box-shadow .12s ease;
+}
+[contenteditable="true"]:hover {
+  background: rgba(26,58,92,.06);
+}
+[contenteditable="true"]:focus {
+  background: #fffbe6;
+  box-shadow: 0 0 0 1px #e3c66a;
+}
+
+.add-row { display: flex; justify-content: flex-end; margin-top: 6px; }
+.remove-btn {
+  border: none;
+  background: transparent;
+  color: #b3261e;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  padding: 0 2px;
+  opacity: .55;
+}
+.remove-btn:hover { opacity: 1; }
+.entry-remove {
+  position: absolute;
+  top: 0;
+  right: -22px;
+}
+.skill-tag .remove-btn { font-size: 11px; }
+.cert-remove { position: absolute; top: 0; right: -22px; }
+.edu-remove { position: absolute; top: 0; right: -22px; }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: #eaeaea;
+  margin: 4px 0 20px;
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; box-shadow: none; width: 100%; }
+  .toolbar, .add-row, .remove-btn, .entry-remove, .cert-remove, .edu-remove { display: none !important; }
+}
