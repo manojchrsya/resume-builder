@@ -209,22 +209,6 @@ git push origin feature/new-feature
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots here.
-
-```
-Home Page
-
-Editor
-
-Preview
-
-Export PDF
-```
-
----
-
 ## 📃 License
 
 This project is licensed under the MIT License.
