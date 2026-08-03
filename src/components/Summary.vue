@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts" setup>
-  defineProps({
-    summary: {
-      type: String,
-      required: true
-    },
-  });
+defineProps({
+  summary: {
+    type: String,
+    required: true,
+  },
+})
 </script>

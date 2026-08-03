@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="section">
     <div class="section-title-row">
@@ -6,10 +7,10 @@
     </div>
     <div id="educationList">
       <div class="edu-entry" v-for="(data, index) in educations" :key="index">
-        <div class="edu-degree" :data.title>{{ data.title }}</div>
-        <div class="edu-school" :data.institution>{{ data.institution }}</div>
+        <div class="edu-degree" >{{ data.title }}</div>
+        <div class="edu-school" >{{ data.institution }}</div>
         <div class="edu-meta">
-          <span :data.location>{{ data.location }}</span>
+          <span>{{ data.location }}</span>
           <span>{{ data.year }} &nbsp;·&nbsp; Scored {{ data.percentage }}</span>
         </div>
       </div>
@@ -18,20 +19,20 @@
 </template>
 
 <script lang="ts" setup>
-  import type { Education } from '@/types/common';
-  const emit = defineEmits(['update:educations']);
+import type { Education } from '@/types/common'
+// const emit = defineEmits(['update:educations'])
 
-  defineProps({
-    educations: {
-      type: Array as () => Education[],
-      required: true
-    },
-  });
+defineProps({
+  educations: {
+    type: Array as () => Education[],
+    required: true,
+  },
+})
 
-  function addEducation() {
-    // console.log(this.educatations);
-    // emit('update:educatations', { ...props.educatations, name: 'New Education'})
-    // alert('Add Education button clicked!');
-    // this.educatations.push({ name: 'New Education', description: "edit me!" });
-  }
+// function addEducation() {
+//   // console.log(this.educatations);
+//   // emit('update:educatations', { ...props.educatations, name: 'New Education'})
+//   // alert('Add Education button clicked!');
+//   // this.educatations.push({ name: 'New Education', description: "edit me!" });
+// }
 </script>

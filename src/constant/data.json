@@ -1,5 +1,5 @@
 {
-  "header" : {
+  "header": {
     "name": "Manoj Chaurasiya",
     "title": "Engineering Manager | Technical Lead",
     "email": "manojchrsya@gmail.com",
@@ -20,7 +20,13 @@
     },
     {
       "title": "Technicals",
-      "skills": ["Microservices", "Distributed Architecture", "System Design", "Infra Cost Optimization", "Debugging"]
+      "skills": [
+        "Microservices",
+        "Distributed Architecture",
+        "System Design",
+        "Infra Cost Optimization",
+        "Debugging"
+      ]
     },
     {
       "title": "Frameworks & Libraries",
@@ -106,7 +112,6 @@
           ]
         }
       ]
-      
     },
     {
       "company": "PSP Marketing",
@@ -143,17 +148,45 @@
     {
       "name": "novio – D2C Secured and Non Secured Credit Card & Rewards Platform",
       "description": "Built and enhanced a D2C fintech platform enabling customers to apply for FD-backed credit cards, perform CRIF bureau checks, complete digital onboarding, and redeem reward points for vouchers. Designed scalable backend services, payment workflows, banking integrations, and observability solutions.",
-      "techStack": ["Node.js", "TypeScript", "PostgreSQL", "Redis", "Kafka", "AWS", "Kubernetes", "New Relic"]
+      "techStack": [
+        "Node.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Redis",
+        "Kafka",
+        "AWS",
+        "Kubernetes",
+        "New Relic"
+      ]
     },
     {
       "name": "Credilio – FinTech Credit Cards & Personal Loans Platform",
       "description": "Developed and maintained a multi-bank platform integrating credit card and personal loan journeys across banks, NBFCs, and financial partners. Designed REST APIs, optimized database performance, implemented asynchronous processing, and led cloud infrastructure improvements.",
-      "techStack": ["Node.js", "PostgreSQL", "Redis", "Kafka", "AWS", "Docker", "Lambda", "Kubernetes", "New Relic"]
+      "techStack": [
+        "Node.js",
+        "PostgreSQL",
+        "Redis",
+        "Kafka",
+        "AWS",
+        "Docker",
+        "Lambda",
+        "Kubernetes",
+        "New Relic"
+      ]
     },
     {
       "name": "DearO – Workshop Management System",
       "description": "Architected and developed a cloud-based workshop management platform for automobile service centers to manage customers, job cards, inventory, invoicing, employee operations, and service workflows. Designed the complete application architecture, database schema, REST APIs, and Admin Panel.",
-      "techStack": ["Node.js", "JavaScript", "Loopback", "Redis", "MongoDB", "ElasticSearch", "Nuxt.js", "AWS"]
+      "techStack": [
+        "Node.js",
+        "JavaScript",
+        "Loopback",
+        "Redis",
+        "MongoDB",
+        "ElasticSearch",
+        "Nuxt.js",
+        "AWS"
+      ]
     }
   ],
   "educations": [

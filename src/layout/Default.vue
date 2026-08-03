@@ -16,6 +16,6 @@ export default {
   name: 'AppLayout',
   components: {
     AppHeader,
-  }
+  },
 }
 </script>

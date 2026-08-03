@@ -1,11 +1,17 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 :root {
   --accent: #1a3a5c;
-  --rule:   #1a3a5c;
-  --text:   #1c1c1c;
-  --muted:  #000000;
-  --light:  #777777;
+  --rule: #1a3a5c;
+  --text: #1c1c1c;
+  --muted: #000000;
+  --light: #777777;
   --page-w: 780px;
 }
 
