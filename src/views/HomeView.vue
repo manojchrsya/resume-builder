@@ -6,7 +6,7 @@
         <!-- SUMMARY -->
         <Summary :summary="profile.summary" @update:summary="onSummaryUpdated" />
         <Skills :skills="skills"  @add:skill-group="onSkillGroupAdded"  @update:skill-group="onSkillGroupUpdated" />
-        <Experience :experiences="profile.experiences" />
+        <Experience :experiences="experiences" @add:experience="onExperianceAdded" @update:experience="onExperianceUpdated" />
         <Project :projects="projects"  @add:project="onProjectAdded" @update:project="onProjectUpdated" />
         <Education :educations="educations"  @add:education="onEducationAdded" @update:education="onEducationUpdated" />
       </div>
@@ -33,6 +33,7 @@ const { profile } = storeToRefs(store);
 const projects = reactive([...profile.value.projects]);
 const educations = reactive([...profile.value.educations]);
 const skills = reactive([...profile.value.skills]);
+const experiences = reactive([...profile.value.experiences]);
 
 function onHeaderUpdated(updatedHeader: typeof profile.value.header) {
   Object.assign(profile.value.header, updatedHeader);
@@ -70,6 +71,17 @@ function onSkillGroupUpdated(updatedSkills: typeof profile.value.skills) {
 function onSkillGroupAdded(newSkill: (typeof profile.value.skills)[number]) {
   skills.push(newSkill);
   profile.value.skills = skills;
+}
+
+function onExperianceUpdated(updatedExperiences: typeof profile.value.experiences) {
+  experiences.splice(0, experiences.length, ...updatedExperiences);
+  console.log('onExperianceUpdated', updatedExperiences);
+  profile.value.experiences = experiences;
+}
+
+function onExperianceAdded(newExperience: (typeof profile.value.experiences)[number]) {
+  experiences.push(newExperience);
+  profile.value.experiences = experiences;
 }
 
 </script>

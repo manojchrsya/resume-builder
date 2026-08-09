@@ -177,6 +177,7 @@
 .entry ul {
   padding-left: 16px;
   margin-top: 5px;
+  display: block;
 }
 .entry ul li {
   font-size: 12.5px;
@@ -352,6 +353,25 @@
   height: 1px;
   background: #eaeaea;
   margin: 4px 0 20px;
+}
+
+.role-badge {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #f0f3f7;
+  padding: 1px 7px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+.role-badge.off {
+  color: var(--muted);
+  background: transparent;
+  border: 1px dashed var(--line);
 }
 
 /* ── PRINT ── */
