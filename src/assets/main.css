@@ -301,8 +301,12 @@
 [contenteditable='true']:hover {
   background: rgba(26, 58, 92, 0.06);
 }
+.header [contenteditable='true']:focus {
+  background: #888888;
+  box-shadow: 0 0 0 1px #e3c66a;
+}
 [contenteditable='true']:focus {
-  background: #fffbe6;
+  background: #ffffff;
   box-shadow: 0 0 0 1px #e3c66a;
 }
 
