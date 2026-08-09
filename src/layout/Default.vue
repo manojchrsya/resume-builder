@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div id="app">
     <AppHeader></AppHeader>
@@ -9,13 +10,4 @@
   </div>
 </template>
 
-<script>
-import AppHeader from './Header.vue'
-
-export default {
-  name: 'AppLayout',
-  components: {
-    AppHeader,
-  },
-}
-</script>
+<script lang="ts" setup></script>
