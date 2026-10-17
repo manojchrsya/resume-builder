@@ -85,8 +85,8 @@ function onSkillGroupAdded(newSkill: (typeof profile.value.skills)[number]) {
 function onExperienceUpdated(updatedExperiences: typeof profile.value.experiences) {
   experiences.splice(0, experiences.length, ...updatedExperiences);
   experiences.map((exp, index) => {
-    exp.designations.forEach((designation: { current: boolean }) => {
-      designation.current = index === 0;
+    exp.designations.forEach((designation: { current: boolean }, designationIndex: number) => {
+      designation.current = index === 0 && designationIndex === 0;
     });
   });
   profile.value.experiences = experiences;
