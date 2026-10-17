@@ -1,14 +1,14 @@
 // stores/profile.js
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import * as data from '../constant/data.json';
+import data from '../constant/data.json';
 
 export const useProfileStore = defineStore('profile', () => {
   const profile = ref(getProfile());
 
   function getProfile() {
     const stored = localStorage.getItem('profile');
-    return stored ? JSON.parse(stored) : data;
+    return stored ? JSON.parse(stored) : structuredClone(data);
   }
 
   function saveToStorage() {
@@ -17,7 +17,7 @@ export const useProfileStore = defineStore('profile', () => {
 
   function resetProfile() {
     localStorage.removeItem('profile');
-    profile.value = data;
+    profile.value = structuredClone(data);
   }
 
   return {

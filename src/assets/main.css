@@ -234,8 +234,10 @@
 /* ── SKILLS ── */
 .skills-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 10px 24px;
+}
+.skills-grid--columns {
+  grid-template-columns: 1fr 1fr;
 }
 .skill-group {
   position: relative;

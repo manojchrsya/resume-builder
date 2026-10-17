@@ -16,11 +16,11 @@
             &nbsp;·&nbsp;
             <span style="font-weight: 400; font-size: 12px; color: var(--light)" :contenteditable="isEditing" data-field="location" @blur="updateExperience">{{ data.location }}</span>
           </div>
-          <div class="entry-date" :contenteditable="isEditing" data-field="duration" @blur="updateExperience">{{ data.duration }}</div>
+          <div class="entry-date" :contenteditable="isEditing" data-field="totalDuration" @blur="updateExperience">{{ data.totalDuration }}</div>
         </div>
 
         <!-- Role 2: Current (promoted) -->
-        <div v-for="(designation, designationIndex) in data.designations" :key="designationIndex"
+        <div v-for="(designation, designationIndex) in data.designations" :key="designationIndex" :data-di="designationIndex"
           :style="
             designation.current
               ? 'position:relative; padding-left:14px; border-left:2px solid var(--accent); margin-bottom:10px;'
@@ -49,7 +49,7 @@
           </div>
           <ul >
             <li v-for="(responsibility, responsibilityIndex) in designation.responsibilities" :key="responsibilityIndex">
-              <span class="li-text" data-field="responsibility" :contenteditable="isEditing" @blur="updateExperience">{{ responsibility }} </span>
+              <span class="li-text" data-field="responsibility" :data-ri="responsibilityIndex" :contenteditable="isEditing" @blur="updateExperience">{{ responsibility }} </span>
               <button class="remove-btn" v-if="isEditing" title="Remove line" @click="removeResponsibility" :data-ei="index" :data-di="designationIndex" :data-ri="responsibilityIndex">×</button>
             </li>
           </ul>
@@ -84,7 +84,6 @@ const { experiences } = props;
 
 function removeExperience(event: Event) {
   const index = Number((event.currentTarget as HTMLElement).dataset.pi);
-  console.log('Removing experience at index:', index);
   const updatedExperiences = [...experiences];
   updatedExperiences.splice(index, 1);
   emit('update:experience', updatedExperiences);
@@ -95,11 +94,11 @@ function addExperience() {
     company: 'New Company',
     url: '',
     location: 'Mumbai, India',
-    duration: 'October 2023 - September 2024',
+    totalDuration: 'October 2023 - September 2024',
     designations: [
       {
         title: 'New Role',
-        current: false,
+        current: true,
         promoted: false,
         duration: '',
         responsibilities: ["New responsibility 1", "New responsibility 2"],
@@ -126,13 +125,44 @@ function removeRole(event: Event) {
 
 function updateExperience(event: Event) {
   const target = event.currentTarget as HTMLElement;
-  const field = target.dataset.field as keyof Experience;
+  const field = target.dataset.field;
   const entry = target.closest('.entry');
-  const index = entry instanceof HTMLElement ? Number(entry.dataset.pi) : -1;
-  if (index !== undefined && field) {
-    const updatedExperience = { ...experiences[index], [field]: target.innerText };
-    emit('update:experience', experiences.map((exp, i) => i === index ? updatedExperience : exp));
+  if (!(entry instanceof HTMLElement) || !field) return;
+
+  const experienceIndex = Number(entry.dataset.pi);
+  const experience = experiences[experienceIndex];
+  if (!experience) return;
+
+  const designationElement = target.closest('[data-di]');
+  let updatedExperience: Experience;
+
+  if (designationElement instanceof HTMLElement) {
+    const designationIndex = Number(designationElement.dataset.di);
+    const designation = experience.designations[designationIndex];
+    if (!designation) return;
+
+    const designations = [...experience.designations];
+    if (field === 'responsibility') {
+      const responsibilityIndex = Number(target.dataset.ri);
+      if (responsibilityIndex < 0 || responsibilityIndex >= designation.responsibilities.length) return;
+
+      const responsibilities = [...designation.responsibilities];
+      responsibilities[responsibilityIndex] = target.innerText;
+      designations[designationIndex] = { ...designation, responsibilities };
+    } else if (field === 'title' || field === 'duration') {
+      designations[designationIndex] = { ...designation, [field]: target.innerText };
+    } else {
+      return;
+    }
+
+    updatedExperience = { ...experience, designations };
+  } else if (field === 'company' || field === 'location' || field === 'totalDuration') {
+    updatedExperience = { ...experience, [field]: target.innerText };
+  } else {
+    return;
   }
+
+  emit('update:experience', experiences.map((item, index) => index === experienceIndex ? updatedExperience : item));
 }
 
 function removeResponsibility(event: Event) {

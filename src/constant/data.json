@@ -9,6 +9,9 @@
     "github": "https://github.com/manojchrsya"
   },
   "summary": "Backend engineering leader with 11+ years of experience designing and building high-scale distributed systems for FinTech and banking platforms. Currently serving as an Engineering Manager while continuing to lead architecture, backend development, and technical execution for third party API’s and multi-bank integration platforms. Specialized in Node.js, PostgreSQL, Kafka, Redis, AWS and event-driven architectures, with strong expertise in system design, API development, caching, observability, and production reliability. Passionate about solving complex engineering problems, mentoring teams, and delivering scalable, high-performance backend platforms.",
+  "config": {
+    "enableGridColumn": true
+  },
   "skills": [
     {
       "title": "Languages",
@@ -46,7 +49,7 @@
       "company": "novio",
       "url": "https://www.novio.in/",
       "location": "Mumbai, Maharashtra, India",
-      "duration": "Nov 2021 — Present",
+      "totalDuration": "Nov 2021 — Present",
       "designations": [
         {
           "title": "Engineering Manager",
@@ -81,7 +84,7 @@
     {
       "company": "Mahindra First Choice Services",
       "location": "Mumbai, Maharashtra, India",
-      "duration": "Dec 2016 — Oct 2021",
+      "totalDuration": "Dec 2016 — Oct 2021",
       "designations": [
         {
           "title": "Lead Software Engineer",
@@ -100,7 +103,7 @@
     {
       "company": "Ambab",
       "location": "Mumbai, Maharashtra, India",
-      "duration": "Sep 2015 — Dec 2016",
+      "totalDuration": "Sep 2015 — Dec 2016",
       "designations": [
         {
           "title": "Sr. Software Developer",
@@ -116,7 +119,7 @@
     {
       "company": "PSP Marketing",
       "location": "Mumbai, Maharashtra, India",
-      "duration": "May 2014 — Sep 2015",
+      "totalDuration": "May 2014 — Sep 2015",
       "designations": [
         {
           "title": "PHP Developer",
@@ -131,7 +134,7 @@
     {
       "company": "Postbox Communication",
       "location": "Mumbai, Maharashtra, India",
-      "duration": "Feb 2013 — May 2014",
+      "totalDuration": "Feb 2013 — May 2014",
       "designations": [
         {
           "title": "PHP Developer",

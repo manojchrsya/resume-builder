@@ -5,8 +5,14 @@
       <div class="body">
         <!-- SUMMARY -->
         <Summary :summary="profile.summary" @update:summary="onSummaryUpdated" />
-        <Skills :skills="skills"  @add:skill-group="onSkillGroupAdded"  @update:skill-group="onSkillGroupUpdated" />
-        <Experience :experiences="experiences" @add:experience="onExperianceAdded" @update:experience="onExperianceUpdated" />
+        <Skills 
+          :skills="skills"
+          :enable-grid-column="profile.config.enableGridColumn"
+          @add:skill-group="onSkillGroupAdded"
+          @update:skill-group="onSkillGroupUpdated"
+          @toggle:grid-column="onToggleGridColumn"
+        />
+        <Experience :experiences="experiences" @add:experience="onExperienceAdded" @update:experience="onExperienceUpdated" />
         <Project :projects="projects"  @add:project="onProjectAdded" @update:project="onProjectUpdated" />
         <Education :educations="educations"  @add:education="onEducationAdded" @update:education="onEducationUpdated" />
       </div>
@@ -29,6 +35,9 @@ import { storeToRefs } from 'pinia'
 import { reactive } from 'vue'
 const store = useProfileStore();
 const { profile } = storeToRefs(store);
+store.saveToStorage();
+
+// console.log('profile', JSON.stringify(profile.value));
 
 const projects = reactive([...profile.value.projects]);
 const educations = reactive([...profile.value.educations]);
@@ -73,15 +82,29 @@ function onSkillGroupAdded(newSkill: (typeof profile.value.skills)[number]) {
   profile.value.skills = skills;
 }
 
-function onExperianceUpdated(updatedExperiences: typeof profile.value.experiences) {
+function onExperienceUpdated(updatedExperiences: typeof profile.value.experiences) {
   experiences.splice(0, experiences.length, ...updatedExperiences);
-  console.log('onExperianceUpdated', updatedExperiences);
+  experiences.map((exp, index) => {
+    exp.designations.forEach((designation: { current: boolean }) => {
+      designation.current = index === 0;
+    });
+  });
   profile.value.experiences = experiences;
 }
 
-function onExperianceAdded(newExperience: (typeof profile.value.experiences)[number]) {
-  experiences.push(newExperience);
+function onExperienceAdded(newExperience: (typeof profile.value.experiences)[number]) {
+  experiences.unshift(newExperience);
+  experiences.map((exp, index) => {
+    exp.designations.map((designation: { current: boolean }, designationIndex: number) => {
+      designation.current = index === 0 && designationIndex === 0;
+    });
+  });
   profile.value.experiences = experiences;
+}
+
+function onToggleGridColumn(enableGridColumn: boolean) {
+  console.log('onToggleGridColumn', enableGridColumn);
+  profile.value.config.enableGridColumn = enableGridColumn;
 }
 
 </script>

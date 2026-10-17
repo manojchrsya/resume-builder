@@ -2,12 +2,18 @@
 <template>
   <div class="section">
     <div class="section-title-row">
-      <div class="section-title">Skills</div>
+      <div class="section-title">
+        Skills
+        <button class="btn tiny secondary" v-if="isEditing" @click="toggleGridColumn" data-action="toggle-grid-column">
+          {{ enableGridColumn ? 'Disable' : 'Enable' }} Grid
+        </button>
+      </div>
       <button class="btn tiny secondary" v-if="isEditing" @click="addSkillGroup" data-action="add-skill-group">
         + Add Group
       </button>
+
     </div>
-    <div class="skills-grid" id="skillsGrid">
+    <div class="skills-grid" :class="{ 'skills-grid--columns': enableGridColumn }" id="skillsGrid">
       <div class="skill-group" v-for="(data, index) in skills" :key="index">
         <div class="skill-group-name" :contenteditable="isEditing" @input="updateSkillGroup" data-field="title">{{ data.title }}</div>
         <div class="skill-tags" v-if="data.skills.length > 0">
@@ -33,9 +39,13 @@ import type { Skills } from '@/types/common'
 const editor = useEditorStore();
 import { storeToRefs } from 'pinia';
 const { isEditing } = storeToRefs(editor);
-const emit = defineEmits(['add:skill-group', 'add:skill', 'update:skill', 'update:skill-group']);
+const emit = defineEmits(['add:skill-group', 'add:skill', 'update:skill', 'update:skill-group', 'toggle:grid-column']);
 
 const props = defineProps({
+  enableGridColumn: {
+    type: Boolean,
+    default: true,
+  },
   skills: {
     type: Array as () => Skills[],
     required: true,
@@ -94,6 +104,10 @@ function addSkill(e: Event) {
   if (!group) return;
   group.skills.push("New Skill");
   emit('update:skill', updatedSkills);
+}
+
+function toggleGridColumn() {
+  emit('toggle:grid-column', !props.enableGridColumn);
 }
 
 </script>

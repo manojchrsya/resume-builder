@@ -24,7 +24,7 @@ export interface Designation {
 export interface Experience {
   company: string
   location: string
-  duration?: string
+  totalDuration?: string
   url?: string
   designations: Designation[]
 }
