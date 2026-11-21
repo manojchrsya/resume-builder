@@ -1,0 +1,515 @@
+.resume-app {
+  --rb-accent: rgb(49, 93, 232);
+  --rb-ink: #202936;
+  --rb-danger: #c43d3d;
+  width: 100%;
+  min-height: 940px;
+  background: #f7f8fa;
+  color: var(--rb-ink);
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.resume-app,
+.resume-app * {
+  box-sizing: border-box;
+}
+
+.resume-app button,
+.resume-app input,
+.resume-app textarea {
+  font: inherit;
+}
+
+.resume-app button {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.resume-app button:hover {
+  filter: brightness(0.96);
+}
+
+.resume-app input,
+.resume-app textarea {
+  width: 100%;
+  border: 1px solid #dde2ea;
+  border-radius: 8px;
+  padding: 13px 14px;
+  background: #fff;
+  color: #202936;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+}
+
+.resume-app input:focus,
+.resume-app textarea:focus {
+  border-color: var(--rb-accent);
+  box-shadow: 0 0 0 3px #315de814;
+}
+
+.resume-app input::placeholder,
+.resume-app textarea::placeholder {
+  color: #a0a7b3;
+}
+
+.resume-app input[aria-invalid='true'] {
+  border-color: var(--rb-danger);
+}
+
+.resume-app button:focus-visible {
+  outline: 3px solid #94b4ff;
+  outline-offset: 3px;
+}
+
+.resume-app textarea {
+  resize: vertical;
+}
+
+.rb-intro {
+  max-width: 1080px;
+  margin: auto;
+  padding: 43px 30px 0;
+}
+
+.rb-kicker {
+  margin-bottom: 13px;
+  color: var(--rb-accent);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 1.6px;
+}
+
+.rb-intro h1 {
+  margin: 0 0 12px;
+  font-size: 34px;
+  font-weight: 650;
+  letter-spacing: -1.2px;
+}
+
+.rb-intro p {
+  margin: 0;
+  color: #7c8593;
+  font-size: 14px;
+}
+
+.rb-layout {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+  gap: 50px;
+  max-width: 1080px;
+  margin: auto;
+  padding: 42px 30px 64px;
+}
+
+.rb-sidebar-heading {
+  margin: 3px 0 22px;
+  color: #98a0ab;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 1.4px;
+}
+
+.rb-step-btn {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  margin-bottom: 8px;
+  border: 0;
+  border-radius: 8px;
+  padding: 13px 10px;
+  background: transparent;
+  color: #4d596b;
+  text-align: left;
+}
+
+.rb-step-num {
+  display: grid;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid #dce1e8;
+  border-radius: 50%;
+  background: #e5ece6;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rb-step-label {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.rb-step-btn.is-current {
+  background: #eaf0ff;
+  color: var(--rb-accent);
+}
+
+.rb-step-btn.is-current .rb-step-num {
+  border: 0;
+  background: var(--rb-accent);
+  color: #fff;
+}
+
+.rb-step-btn.is-current .rb-step-label {
+  font-weight: 600;
+}
+
+.rb-step-btn.is-todo {
+  color: #949daa;
+}
+
+.rb-step-btn.is-todo .rb-step-num {
+  background: transparent;
+}
+
+.rb-aside-tip {
+  margin-top: 42px;
+  padding: 21px 17px;
+  border-radius: 10px;
+  background: #edf1f8;
+}
+
+.rb-aside-tip strong {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rb-aside-tip p {
+  margin: 0;
+  color: #788496;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.rb-aside-tip hr {
+  height: 1px;
+  margin: 18px 0;
+  border: 0;
+  background: #dce2ec;
+}
+
+.rb-small {
+  color: #84909f;
+  font-size: 12px;
+}
+
+.rb-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 11px;
+  color: #9099a5;
+  font-size: 11px;
+}
+
+.rb-progress {
+  height: 4px;
+  margin-bottom: 27px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #e6eaf0;
+}
+
+.rb-progress > div {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--rb-accent);
+  transition: width 0.3s;
+}
+
+.rb-card {
+  border: 1px solid #e3e7ed;
+  border-radius: 14px;
+  padding: 32px;
+  background: #fff;
+  box-shadow: 0 3px 8px #192a4503;
+}
+
+.rb-card-kicker {
+  margin-bottom: 12px;
+  color: var(--rb-accent);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.rb-card h2 {
+  margin: 0 0 10px;
+  font-size: 25px;
+  letter-spacing: -0.6px;
+}
+
+.rb-card-sub {
+  margin: 0 0 28px;
+  color: #85909e;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.rb-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 20px;
+}
+
+.rb-field {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.rb-field.full,
+.rb-small.full {
+  grid-column: 1 / -1;
+}
+
+.rb-err {
+  min-height: 0;
+  color: var(--rb-danger);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.rb-err:empty {
+  display: none;
+}
+
+.rb-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  border-top: 1px solid #ebedf1;
+  padding-top: 23px;
+}
+
+.resume-app .rb-btn-ghost {
+  border: 1px solid #dde2ea;
+  border-radius: 8px;
+  padding: 12px 20px;
+  background: #fff;
+  color: #647083;
+  font-size: 13px;
+}
+
+.resume-app .rb-btn-primary {
+  border: 0;
+  border-radius: 8px;
+  padding: 14px 23px;
+  background: var(--rb-accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.rb-foot-note {
+  margin-top: 22px;
+  color: #98a1ad;
+  font-size: 11px;
+  text-align: center;
+}
+
+.rb-repeat {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e8ebf0;
+  padding-bottom: 24px;
+}
+
+.rb-repeat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.rb-repeat-head b {
+  color: #4d596b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.resume-app .rb-link {
+  border: 0;
+  padding: 4px 0;
+  background: none;
+  color: #84909f;
+  font-size: 12px;
+}
+
+.resume-app .rb-link:hover {
+  color: var(--rb-accent);
+}
+
+.resume-app .rb-add {
+  width: 100%;
+  border: 1px dashed #c9d2e3;
+  border-radius: 8px;
+  padding: 13px 16px;
+  background: #fff;
+  color: var(--rb-accent);
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.rb-paper {
+  border: 1px solid #e1e5eb;
+  padding: 42px;
+  background: #fff;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.rb-paper h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+
+.rb-paper .rb-role {
+  margin-top: 4px;
+  color: var(--rb-accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rb-paper .rb-contact {
+  margin-top: 6px;
+  color: #677384;
+}
+
+.rb-paper h2 {
+  margin: 26px 0 0;
+  border-bottom: 1px solid #dde2ea;
+  padding-bottom: 8px;
+  color: var(--rb-accent);
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.rb-paper h3 {
+  margin: 17px 0 4px;
+  font-size: 14px;
+}
+
+.rb-paper p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.rb-paper .rb-resume-copy {
+  margin-top: 10px;
+}
+
+.rb-paper .rb-meta {
+  margin-bottom: 4px;
+  color: #677384;
+}
+
+.rb-done-tip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.rb-storage-error {
+  margin-top: 20px;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fff3f1;
+  color: #a12e2e;
+  font-size: 12px;
+}
+
+@media (max-width: 740px) {
+  .rb-layout {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 24px 18px;
+  }
+
+  .rb-side-list {
+    display: flex;
+    gap: 6px;
+  }
+
+  .rb-step-label,
+  .rb-aside-tip,
+  .rb-sidebar-heading {
+    display: none !important;
+  }
+
+  .rb-side-list button {
+    flex: 1;
+    justify-content: center;
+    margin-bottom: 0;
+    padding: 10px !important;
+  }
+
+  .rb-card {
+    padding: 23px;
+  }
+
+  .rb-fields {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .rb-paper {
+    padding: 24px;
+  }
+
+  .rb-intro {
+    padding: 32px 20px 0;
+  }
+
+  .rb-main {
+    min-width: 0;
+  }
+}
+
+@page {
+  margin: 14mm;
+}
+
+@media print {
+  html,
+  body,
+  .resume-app {
+    min-height: 0 !important;
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #printArea,
+  #printArea * {
+    visibility: visible;
+  }
+
+  #printArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  #printArea .rb-paper {
+    border: 0;
+    padding: 0;
+  }
+}

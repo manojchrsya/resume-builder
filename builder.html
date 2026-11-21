@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resumecraft — Build your next chapter</title>
+<meta name="description" content="Build a professional resume step by step and save it as a PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root { --accent: rgb(49, 93, 232); --ink: #202936; --danger: #c43d3d; }
+  html, body { margin: 0; background: #F7F8FA; }
+  .resume-app { width: 100%; font-family: Inter, Arial, sans-serif; background: #F7F8FA; color: var(--ink); min-height: 940px; -webkit-font-smoothing: antialiased; }
+  .resume-app *{box-sizing:border-box}
+  .resume-app button,.resume-app input,.resume-app textarea{font:inherit}
+  .resume-app button{cursor:pointer;transition:background .15s}
+  .resume-app button:hover{filter:brightness(.96)}
+  .resume-app input,.resume-app textarea{width:100%;border:1px solid #DDE2EA;border-radius:8px;padding:13px 14px;background:white;color:#202936;font-size:14px;font-weight:400;outline:none}
+  .resume-app input:focus,.resume-app textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #315de814}
+  .resume-app input::placeholder,.resume-app textarea::placeholder{color:#A0A7B3}
+  .resume-app input[aria-invalid="true"]{border-color:var(--danger)}
+  .resume-app button:focus-visible{outline:3px solid #94b4ff;outline-offset:3px}
+  .resume-app textarea{resize:vertical}
+
+  .rb-top{padding:22px 48px;border-bottom:1px solid #E3E7ED;display:flex;justify-content:space-between;align-items:center;background:white}
+  .rb-brand{display:flex;gap:11px;align-items:center}
+  .rb-mark{background:var(--accent);color:white;border-radius:8px;padding:7px 10px;font-size:22px;font-weight:750}
+  .rb-name{font-size:21px;letter-spacing:-0.8px}
+  .rb-name span{color:var(--accent)}
+  .rb-subbrand{margin-left:18px;border-left:1px solid #ddd;padding-left:22px;font-size:12px;color:#8B93A0}
+  .rb-top-note{font-size:12px;color:#677384}
+
+  .rb-intro{max-width:1080px;margin:auto;padding:43px 30px 0}
+  .rb-kicker{font-size:11px;font-weight:650;letter-spacing:1.6px;color:var(--accent);margin-bottom:13px}
+  .rb-intro h1{font-size:34px;letter-spacing:-1.2px;margin:0 0 12px;font-weight:650}
+  .rb-intro p{font-size:14px;color:#7C8593;margin:0}
+
+  .rb-layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:50px;max-width:1080px;margin:auto;padding:42px 30px 64px}
+  .rb-sidebar-heading{font-size:10px;color:#98A0AB;letter-spacing:1.4px;margin:3px 0 22px;font-weight:650}
+  .rb-step-btn{display:flex;align-items:center;gap:13px;width:100%;border:0;text-align:left;padding:13px 10px;border-radius:8px;margin-bottom:8px;background:transparent;color:#4D596B}
+  .rb-step-num{width:26px;height:26px;border-radius:50%;border:1px solid #DCE1E8;background:#E5ECE6;color:inherit;display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
+  .rb-step-label{font-size:13px;font-weight:400}
+  .rb-step-btn.is-current{background:#EAF0FF;color:var(--accent)}
+  .rb-step-btn.is-current .rb-step-num{border:0;background:var(--accent);color:white}
+  .rb-step-btn.is-current .rb-step-label{font-weight:600}
+  .rb-step-btn.is-todo{color:#949DAA}
+  .rb-step-btn.is-todo .rb-step-num{background:transparent}
+  .rb-aside-tip{margin-top:42px;padding:21px 17px;background:#EDF1F8;border-radius:10px}
+  .rb-aside-tip strong{display:block;font-size:13px;font-weight:600;margin-bottom:9px}
+  .rb-aside-tip p{font-size:12px;line-height:1.8;color:#788496;margin:0}
+  .rb-aside-tip hr{height:1px;border:0;background:#dce2ec;margin:18px 0}
+  .rb-small{font-size:12px;color:#84909f}
+
+  .rb-progress-meta{display:flex;justify-content:space-between;font-size:11px;color:#9099A5;margin-bottom:11px}
+  .rb-progress{height:4px;background:#E6EAF0;border-radius:4px;margin-bottom:27px}
+  .rb-progress > div{height:100%;width:0;background:var(--accent);border-radius:4px;transition:width .3s}
+
+  .rb-card{background:white;border:1px solid #E3E7ED;border-radius:14px;padding:32px;box-shadow:0 3px 8px #192a4503}
+  .rb-card-kicker{font-size:11px;color:var(--accent);font-weight:600;margin-bottom:12px;text-transform:uppercase}
+  .rb-card h2{font-size:25px;letter-spacing:-0.6px;margin:0 0 10px;outline:none}
+  .rb-card-sub{font-size:13px;line-height:1.7;color:#85909E;margin:0 0 28px}
+  .rb-fields{display:grid;grid-template-columns:1fr 1fr;gap:24px 20px}
+  .rb-field{display:grid;gap:9px;font-size:13px;font-weight:550;align-content:start}
+  .rb-field.full{grid-column:1 / -1}
+  .rb-err{font-size:12px;font-weight:400;color:var(--danger);min-height:0}
+  .rb-err:empty{display:none}
+  .rb-actions{margin-top:32px;padding-top:23px;border-top:1px solid #EBEDF1;display:flex;justify-content:space-between;align-items:center}
+  .resume-app .rb-btn-ghost{border:1px solid #DDE2EA;border-radius:8px;padding:12px 20px;background:white;color:#647083;font-size:13px}
+  .resume-app .rb-btn-primary{background:var(--accent);color:white;border:0;border-radius:8px;padding:14px 23px;font-size:13px;font-weight:550}
+  .rb-foot-note{text-align:center;margin-top:22px;font-size:11px;color:#98A1AD}
+
+  .rb-repeat{border-bottom:1px solid #e8ebf0;padding-bottom:24px;margin-bottom:24px}
+  .rb-repeat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .rb-repeat-head b{font-size:12px;font-weight:600;color:#4D596B}
+  .resume-app .rb-link{border:0;background:none;padding:4px 0;font-size:12px;color:#84909f}
+  .rb-link:hover{color:var(--accent)}
+  .resume-app .rb-add{width:100%;border:1px dashed #C9D2E3;border-radius:8px;background:#fff;color:var(--accent);padding:13px 16px;font-size:13px;font-weight:550}
+
+  .rb-paper{background:white;padding:42px;border:1px solid #e1e5eb;font-size:12px;line-height:1.7}
+  .rb-paper h1{font-size:26px;letter-spacing:-0.6px;margin:0;line-height:1.2}
+  .rb-paper .rb-role{color:var(--accent);font-weight:600;font-size:13px;margin-top:4px}
+  .rb-paper .rb-contact{color:#677384;margin-top:6px}
+  .rb-paper h2{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;border-bottom:1px solid #dde2ea;padding-bottom:8px;margin:26px 0 0;color:var(--accent)}
+  .rb-paper h3{font-size:14px;margin:17px 0 4px}
+  .rb-paper p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+  .rb-paper .rb-meta{color:#677384;margin-bottom:4px}
+  .rb-done-tip{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}
+
+  @media(max-width:740px){
+    .rb-layout{grid-template-columns:1fr;gap:25px;padding:24px 18px}
+    .rb-side-list{display:flex;gap:6px}
+    .rb-step-label,.rb-aside-tip,.rb-sidebar-heading{display:none!important}
+    .rb-side-list button{padding:10px!important;flex:1;justify-content:center;margin-bottom:0}
+    .rb-card{padding:23px}
+    .rb-top{padding:20px}
+    .rb-fields{grid-template-columns:1fr;gap:20px}
+    .rb-paper{padding:24px}
+    .rb-subbrand{display:none}
+    .rb-intro{padding:32px 20px 0!important}
+    .rb-top-note{display:none}
+  }
+
+  footer.rb-footer{border-top:1px solid #E5E8EE;padding:22px 20px;text-align:center;font-size:11px;color:#97A1AE}
+
+  /* Print: only the resume paper, so "Save as PDF" gives a clean one-document file */
+  @page{margin:14mm}
+  @media print{
+    html,body,.resume-app{background:#fff!important;min-height:0!important}
+    body *{visibility:hidden}
+    #printArea,#printArea *{visibility:visible}
+    #printArea{position:absolute;left:0;top:0;width:100%}
+    #printArea .rb-paper{border:0;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="resume-app">
+
+  <header class="rb-top">
+    <div class="rb-brand">
+      <span class="rb-mark">r.</span>
+      <strong class="rb-name">resume<span>craft</span></strong>
+      <span class="rb-subbrand">A better next chapter.</span>
+    </div>
+    <span class="rb-top-note">Free to build. Yours to keep.</span>
+  </header>
+
+  <div class="rb-intro">
+    <div class="rb-kicker">YOUR NEXT OPPORTUNITY STARTS HERE</div>
+    <h1>Great experience. Beautifully told.</h1>
+    <p>A few simple steps to a professional resume that feels like you.</p>
+  </div>
+
+  <div class="rb-layout">
+    <aside>
+      <div class="rb-sidebar-heading">BUILD YOUR RESUME</div>
+      <nav class="rb-side-list" id="sideList" aria-label="Resume steps"></nav>
+      <div class="rb-aside-tip">
+        <strong>A little detail goes a long way.</strong>
+        <p>Keep your resume clear, relevant, and focused on what makes you, you.</p>
+        <hr>
+        <span class="rb-small">No signup. No watermarks.</span>
+      </div>
+    </aside>
+
+    <main style="min-width:0">
+      <div class="rb-progress-meta"><span id="stepLabel"></span><span id="pctLabel"></span></div>
+      <div class="rb-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div id="bar"></div></div>
+      <div class="rb-card" id="card"></div>
+      <div class="rb-foot-note">Your story. Your pace. A fresh start.</div>
+    </main>
+  </div>
+
+  <footer class="rb-footer">Made for your next move. © <span id="yr">2026</span> Resumecraft</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+(function ($) {
+  "use strict";
+
+  var STORE = "resumecraft.v1";
+  var STEPS = [
+    { label: "Personal details",   kicker: "Let’s start with you",   title: "Tell us who you are.",        sub: "Your name and contact details sit at the top of your resume." },
+    { label: "Experience",         kicker: "Where you’ve been",      title: "Share your experience.",      sub: "Add your most recent role first and focus on what you achieved." },
+    { label: "Education",          kicker: "Your foundation",        title: "Add your education.",         sub: "Degrees, courses and certifications that back up your story." },
+    { label: "Skills & summary",   kicker: "The finishing touches",  title: "Show what sets you apart.",   sub: "Bring it together with your strengths and a short introduction." },
+    { label: "Review & download",  kicker: "Almost there",           title: "Review and download.",        sub: "Check how it looks, then save it as a PDF." }
+  ];
+
+  var blankExp = function () { return { title: "", company: "", location: "", start: "", end: "", desc: "" }; };
+  var blankEdu = function () { return { degree: "", school: "", start: "", end: "" }; };
+  var fresh = function () {
+    return { step: 1, p: { name: "", title: "", email: "", phone: "", location: "", website: "" },
+             exp: [blankExp()], edu: [blankEdu()], summary: "", skills: "" };
+  };
+
+  var S = load();
+
+  /* ---------- helpers ---------- */
+  function esc(v) { return $("<div>").text(v == null ? "" : v).html(); }
+  function attr(v) { return esc(v).replace(/"/g, "&quot;"); }
+  function load() {
+    try { var raw = localStorage.getItem(STORE); if (raw) { var d = JSON.parse(raw); if (d && d.p && d.exp && d.edu) return d; } } catch (e) {}
+    return fresh();
+  }
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+  function trim(v) { return String(v == null ? "" : v).replace(/^\s+|\s+$/g, ""); }
+  function emailOk(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+
+  /* ---------- sidebar + progress ---------- */
+  function renderSide() {
+    var html = "";
+    $.each(STEPS, function (i, st) {
+      var n = i + 1, cls = n === S.step ? "is-current" : (n > S.step ? "is-todo" : "is-done");
+      html += '<button type="button" class="rb-step-btn ' + cls + '" data-go="' + n + '" aria-label="' + attr(st.label) + '" title="' + attr(st.label) + '"' +
+              (n === S.step ? ' aria-current="step"' : "") + '>' +
+              '<span class="rb-step-num">' + (n < 10 ? "0" : "") + n + '</span><span class="rb-step-label">' + esc(st.label) + '</span></button>';
+    });
+    $("#sideList").html(html);
+    var pct = Math.round((S.step - 1) / (STEPS.length - 1) * 100);
+    $("#bar").css("width", pct + "%");
+    $(".rb-progress").attr("aria-valuenow", pct);
+    $("#stepLabel").text("STEP " + S.step + " OF " + STEPS.length);
+    $("#pctLabel").text(pct + "% through the steps");
+  }
+
+  /* ---------- field builders ---------- */
+  function field(label, key, val, opts) {
+    opts = opts || {};
+    var id = "f-" + (opts.scope || "p") + "-" + (opts.i == null ? "" : opts.i + "-") + key;
+    var data = 'data-scope="' + (opts.scope || "p") + '"' + (opts.i == null ? "" : ' data-i="' + opts.i + '"') + ' data-k="' + key + '"';
+    var control = opts.area
+      ? '<textarea id="' + id + '" rows="' + (opts.rows || 4) + '" ' + data + ' placeholder="' + attr(opts.ph || "") + '">' + esc(val) + '</textarea>'
+      : '<input id="' + id + '" type="' + (opts.type || "text") + '" ' + data + ' value="' + attr(val) + '" placeholder="' + attr(opts.ph || "") + '"' + (opts.auto ? ' autocomplete="' + opts.auto + '"' : "") + '>';
+    return '<div class="rb-field' + (opts.full ? " full" : "") + '"><label for="' + id + '">' + label + '</label>' + control +
+           '<span class="rb-err" id="err-' + id + '" role="alert"></span></div>';
+  }
+
+  function stepFields(n) {
+    var p = S.p, h = "";
+    if (n === 1) {
+      h += field("Full name", "name", p.name, { ph: "e.g. Alex Morgan", auto: "name" });
+      h += field("Job title", "title", p.title, { ph: "e.g. Product Designer" });
+      h += field("Email", "email", p.email, { ph: "you@example.com", type: "email", auto: "email" });
+      h += field("Phone", "phone", p.phone, { ph: "+1 555 000 0000", type: "tel", auto: "tel" });
+      h += field("Location", "location", p.location, { ph: "City, Country", auto: "address-level2" });
+      h += field("Website or LinkedIn", "website", p.website, { ph: "linkedin.com/in/yourname" });
+    } else if (n === 2) {
+      $.each(S.exp, function (i, e) {
+        h += '<div class="rb-repeat full" style="grid-column:1/-1"><div class="rb-repeat-head"><b>Role ' + (i + 1) + '</b>' +
+             (S.exp.length > 1 ? '<button type="button" class="rb-link" data-remove="exp" data-i="' + i + '">Remove</button>' : "") + '</div>' +
+             '<div class="rb-fields">' +
+             field("Job title", "title", e.title, { scope: "exp", i: i, ph: "e.g. Senior Designer" }) +
+             field("Company", "company", e.company, { scope: "exp", i: i, ph: "e.g. Studio Labs" }) +
+             field("Location", "location", e.location, { scope: "exp", i: i, ph: "City, Country" }) +
+             field("Start date", "start", e.start, { scope: "exp", i: i, ph: "e.g. Jan 2022" }) +
+             field("End date", "end", e.end, { scope: "exp", i: i, ph: "e.g. Dec 2024, or Present" }) +
+             field("What did you achieve?", "desc", e.desc, { scope: "exp", i: i, area: true, rows: 4, full: true, ph: "Led a team of 4 designers. Improved onboarding completion by 32%." }) +
+             '</div></div>';
+      });
+      h += '<div class="rb-field full"><button type="button" class="rb-add" data-add="exp">+ Add another role</button></div>';
+    } else if (n === 3) {
+      $.each(S.edu, function (i, e) {
+        h += '<div class="rb-repeat full" style="grid-column:1/-1"><div class="rb-repeat-head"><b>Education ' + (i + 1) + '</b>' +
+             (S.edu.length > 1 ? '<button type="button" class="rb-link" data-remove="edu" data-i="' + i + '">Remove</button>' : "") + '</div>' +
+             '<div class="rb-fields">' +
+             field("Degree or course", "degree", e.degree, { scope: "edu", i: i, ph: "e.g. BFA, Interaction Design" }) +
+             field("School", "school", e.school, { scope: "edu", i: i, ph: "e.g. California College of the Arts" }) +
+             field("Start year", "start", e.start, { scope: "edu", i: i, ph: "e.g. 2016" }) +
+             field("End year", "end", e.end, { scope: "edu", i: i, ph: "e.g. 2020, or Present" }) +
+             '</div></div>';
+      });
+      h += '<div class="rb-field full"><button type="button" class="rb-add" data-add="edu">+ Add another</button></div>';
+    } else if (n === 4) {
+      h += field("Professional summary", "summary", S.summary, { scope: "root", area: true, rows: 4, full: true, ph: "Write 2–3 sentences about your experience, strengths, and what you’re looking for." });
+      h += field("Skills", "skills", S.skills, { scope: "root", area: true, rows: 4, full: true, ph: "e.g. Project management, Figma, Python, Communication" });
+      h += '<span class="rb-small" style="grid-column:1/-1">Separate your skills with commas.</span>';
+    }
+    return h;
+  }
+
+  /* ---------- resume preview (step 5) ---------- */
+  function resumeHtml() {
+    var p = S.p, h = "";
+    var contact = $.grep([p.location, p.email, p.phone, p.website], Boolean).join("  ·  ");
+    h += "<h1>" + esc(p.name || "Your name") + "</h1>";
+    if (p.title) h += '<div class="rb-role">' + esc(p.title) + "</div>";
+    if (contact) h += '<div class="rb-contact">' + esc(contact) + "</div>";
+    if (trim(S.summary)) h += "<h2>Profile</h2><p style=\"margin-top:10px\">" + esc(trim(S.summary)) + "</p>";
+
+    var exp = $.grep(S.exp, function (e) { return e.title || e.company || e.desc; });
+    if (exp.length) {
+      h += "<h2>Experience</h2>";
+      $.each(exp, function (_, e) {
+        var dates = $.grep([e.start, e.end], Boolean).join(" – ");
+        var where = $.grep([e.company, e.location], Boolean).join(" · ");
+        h += "<h3>" + esc(e.title || e.company) + "</h3>";
+        var meta = $.grep([e.title ? where : e.location, dates], Boolean).join("   |   ");
+        if (meta) h += '<div class="rb-meta">' + esc(meta) + "</div>";
+        if (trim(e.desc)) h += "<p>" + esc(trim(e.desc)) + "</p>";
+      });
+    }
+    var edu = $.grep(S.edu, function (e) { return e.degree || e.school; });
+    if (edu.length) {
+      h += "<h2>Education</h2>";
+      $.each(edu, function (_, e) {
+        var yrs = $.grep([e.start, e.end], Boolean).join(" – ");
+        h += "<h3>" + esc(e.degree || e.school) + "</h3>";
+        var meta = $.grep([e.degree ? e.school : "", yrs], Boolean).join("   |   ");
+        if (meta) h += '<div class="rb-meta">' + esc(meta) + "</div>";
+      });
+    }
+    var skills = $.grep($.map(String(S.skills).split(","), function (x) { return trim(x); }), Boolean);
+    if (skills.length) h += "<h2>Skills</h2><p style=\"margin-top:10px\">" + esc(skills.join("  ·  ")) + "</p>";
+    return h;
+  }
+
+  /* ---------- card ---------- */
+  function renderCard(focus) {
+    var n = S.step, st = STEPS[n - 1], h = "";
+    h += '<div class="rb-card-kicker">' + esc(st.kicker) + "</div>";
+    h += '<h2 tabindex="-1" id="stepTitle">' + esc(st.title) + "</h2>";
+    h += '<p class="rb-card-sub">' + esc(st.sub) + "</p>";
+    if (n < 5) {
+      h += '<div class="rb-fields">' + stepFields(n) + "</div>";
+    } else {
+      h += '<div id="printArea"><div class="rb-paper">' + resumeHtml() + "</div></div>";
+      h += '<div class="rb-done-tip"><span class="rb-small">Tip: in the print window, choose “Save as PDF” as the destination.</span>' +
+           '<button type="button" class="rb-link" data-restart="1">Start over</button></div>';
+    }
+    h += '<div class="rb-actions">' +
+         '<button type="button" class="rb-btn-ghost" data-back="1"' + (n === 1 ? ' style="visibility:hidden"' : "") + ">Back</button>" +
+         '<button type="button" class="rb-btn-primary" data-next="1">' + (n === 4 ? "Generate resume" : n === 5 ? "Download PDF" : "Continue") + "</button></div>";
+    $("#card").html(h);
+    renderSide();
+    if (focus) $("#stepTitle").trigger("focus");
+  }
+
+  /* ---------- validation (step 1 only: name + valid email) ---------- */
+  function setErr(key, msg) {
+    var $i = $("#f-p-" + key);
+    $i.attr("aria-invalid", msg ? "true" : "false");
+    $("#err-f-p-" + key).text(msg || "");
+  }
+  function validateStep1(show) {
+    var ok = true, nameMsg = "", mailMsg = "";
+    if (!trim(S.p.name)) { nameMsg = "Please enter your name."; ok = false; }
+    if (!trim(S.p.email)) { mailMsg = "Please enter your email."; ok = false; }
+    else if (!emailOk(trim(S.p.email))) { mailMsg = "That email doesn’t look right."; ok = false; }
+    if (show && S.step === 1) { setErr("name", nameMsg); setErr("email", mailMsg); if (!ok) $("#card [aria-invalid=true]").first().trigger("focus"); }
+    return ok;
+  }
+
+  function go(n, focus) {
+    n = Math.max(1, Math.min(STEPS.length, n));
+    if (n > 1 && !validateStep1(false)) { S.step = 1; renderCard(true); validateStep1(true); save(); return; }
+    S.step = n; save(); renderCard(focus !== false);
+    $("html, body").stop().animate({ scrollTop: $(".rb-layout").offset().top - 20 }, 200);
+  }
+
+  function printResume() {
+    var old = document.title;
+    document.title = (trim(S.p.name) || "Resume") + " – Resume";
+    window.print();
+    setTimeout(function () { document.title = old; }, 500);
+  }
+
+  /* ---------- events ---------- */
+  $(document)
+    .on("click", "[data-go]", function () { go(+$(this).data("go")); })
+    .on("click", "[data-back]", function () { go(S.step - 1); })
+    .on("click", "[data-next]", function () {
+      if (S.step === 1 && !validateStep1(true)) return;
+      if (S.step === 5) { printResume(); return; }
+      go(S.step + 1);
+    })
+    .on("click", "[data-add]", function () {
+      var k = $(this).data("add"); S[k].push(k === "exp" ? blankExp() : blankEdu());
+      save(); renderCard(false); $("#card .rb-repeat").last().find("input").first().trigger("focus");
+    })
+    .on("click", "[data-remove]", function () {
+      var k = $(this).data("remove"), i = +$(this).data("i");
+      S[k].splice(i, 1); if (!S[k].length) S[k].push(k === "exp" ? blankExp() : blankEdu());
+      save(); renderCard(false);
+    })
+    .on("click", "[data-restart]", function () {
+      if (window.confirm("Start over? This clears everything you’ve entered.")) { S = fresh(); save(); renderCard(true); }
+    })
+    .on("input", "#card [data-k]", function () {
+      var $e = $(this), k = $e.data("k"), scope = $e.data("scope"), v = $e.val();
+      if (scope === "p") S.p[k] = v;
+      else if (scope === "root") S[k] = v;
+      else S[scope][+$e.data("i")][k] = v;
+      if ($e.attr("aria-invalid") === "true") validateStep1(true);
+      save();
+    })
+    .on("keydown", "#card input", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); $("[data-next]").trigger("click"); }
+    });
+
+  $("#yr").text(new Date().getFullYear());
+  renderCard(false);
+})(jQuery);
+</script>
+</body>
+</html>

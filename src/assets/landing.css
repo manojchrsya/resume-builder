@@ -1,0 +1,521 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.landing-page {
+  --ink: #14213d;
+  --muted: #64718a;
+  --blue: #2463eb;
+  --pale-blue: #eff5ff;
+  min-height: 100vh;
+  background: #fff;
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+}
+
+html:has(.landing-page) {
+  scroll-behavior: smooth;
+}
+
+.hero {
+  min-height: 650px;
+  padding: 58px 24px 0px;
+  background: linear-gradient(180deg, #fff 0%, #fff 72%, #f8fbff 100%);
+  border-bottom: 1px solid #edf1f7;
+}
+
+.hero-copy {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.eyebrow {
+  width: fit-content;
+  margin: 0 auto 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--blue);
+  background: #f5f8fd;
+  border: 1px solid #edf1f7;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.hero h1 {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: clamp(46px, 5vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.hero-description {
+  max-width: 800px;
+  margin: 20px auto 28px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.hero-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 158px;
+  height: 52px;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(36, 99, 235, 0.18);
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.hero-primary:hover {
+  background: #1d55d4;
+  box-shadow: 0 10px 28px rgba(36, 99, 235, 0.25);
+  transform: translateY(-2px);
+}
+
+.hero-note {
+  margin-top: 12px;
+  color: #8995aa;
+  font-size: 12px;
+}
+
+.hero-preview {
+  width: min(1040px, 100%);
+  margin: 16px auto 0;
+  position: relative;
+}
+
+.preview-window {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px #d9e3f4,
+    0 18px 56px rgba(20, 33, 61, 0.1);
+}
+
+.preview-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 51.5px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e2e8f2;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.preview-document-name {
+  font-weight: 600;
+}
+
+.preview-topbar .saved {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.preview-body {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 200px;
+  align-items: start;
+  background: #eaf0f9;
+}
+
+.preview-sidebar {
+  background: #fff;
+  padding: 28px 20px;
+}
+
+.sidebar-heading {
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #64718a;
+  font-size: 12px;
+}
+
+.sidebar-item svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sidebar-item span {
+  min-width: 0;
+}
+
+.sidebar-item.active {
+  background: var(--pale-blue);
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.resume-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(100%, 520px);
+  margin: 28px auto 32px;
+  padding: 32px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(20, 33, 61, 0.08);
+  color: #273347;
+}
+
+.resume-card h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.resume-title {
+  margin-top: 0;
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+.resume-contact {
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 13.5px;
+}
+
+.resume-section {
+  display: contents;
+}
+
+.resume-section h3 {
+  margin: 0;
+  padding: 0;
+  color: var(--blue);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 13.5px;
+}
+
+.resume-section h4 {
+  margin: 0;
+  color: #273347;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 15px;
+}
+
+.resume-section p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 15px;
+}
+
+.resume-section .resume-meta {
+  color: var(--muted);
+}
+
+.coach-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #f8fafe;
+  padding: 28px 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.coach-heading {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.coach-orb {
+  display: block;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--pale-blue);
+  color: var(--blue);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.coach-subtitle {
+  margin: 0;
+  font-size: 11px;
+  line-height: 16.5px;
+}
+
+.strength-score {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--pale-blue);
+}
+
+.score-value,
+.score-label,
+.coach-tip-title,
+.coach-tip {
+  margin: 0;
+}
+
+.score-value {
+  color: var(--blue);
+  font-size: 23px;
+  line-height: 34.5px;
+}
+
+.score-label {
+  color: var(--ink);
+  font-size: 10px;
+  line-height: 15px;
+}
+
+.coach-tip-title {
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.coach-tip {
+  font-size: 11px;
+  line-height: 16.5px;
+}
+
+
+
+.how-section {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  padding: 64px 48px;
+  background: #fff;
+  text-align: center;
+}
+
+.how-section h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+}
+
+.section-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.steps {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 24px;
+  text-align: left;
+}
+
+.steps article {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #e2e8f2;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.step-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.step-top svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  stroke: var(--blue);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step-top span {
+  flex: 1;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+  text-align: right;
+}
+
+.steps h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.steps p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.closing {
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 24px;
+  background: #14213d;
+  color: #fff;
+  text-align: center;
+}
+
+.closing h2 {
+  font-size: 40px;
+  letter-spacing: -0.04em;
+}
+
+.closing p {
+  margin-top: 10px;
+  color: #bbc5d6;
+  font-size: 16px;
+}
+
+.closing a {
+  margin-top: 28px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 1199px) {
+  .preview-body {
+    grid-template-columns: minmax(0, 1fr) 200px;
+  }
+
+  .preview-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 809px) {
+  .hero {
+    padding: 36px 16px 70px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .hero-copy,
+  .hero h1,
+  .hero-description {
+    max-width: 100%;
+  }
+
+  .hero-description {
+    font-size: 16px;
+  }
+
+  .hero-preview {
+    margin-top: 44px;
+  }
+
+  .preview-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .resume-card {
+    width: 100%;
+    margin: 20px auto;
+    padding: 24px;
+  }
+
+  .coach-card {
+    display: none;
+  }
+
+  .preview-topbar {
+    padding: 12px 16px;
+  }
+
+  .how-section {
+    gap: 24px;
+    padding: 48px 20px;
+  }
+
+  .how-section h2 {
+    font-size: 32px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .closing h2 {
+    font-size: 32px;
+  }
+}
