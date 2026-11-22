@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <script>
+      ;(function redirectToSpa(location) {
+        const base = '/resume-builder/'
+        const relativePath =
+          location.pathname.startsWith(base)
+            ? location.pathname.slice(base.length - 1)
+            : location.pathname
+        const route = relativePath
+          .replace(/&/g, '~and~')
+          .replace(/\?/g, '~question~')
+        const search = location.search
+          .replace(/&/g, '~and~')
+          .replace(/\?/g, '~question~')
+        location.replace(
+          location.protocol +
+            '//' +
+            location.host +
+            base +
+            '?' +
+            route +
+            (search ? '&' + search.slice(1) : '') +
+            location.hash,
+        )
+      })(window.location)
+    </script>
+  </head>
+  <body></body>
+</html>
