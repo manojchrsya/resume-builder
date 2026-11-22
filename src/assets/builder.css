@@ -336,6 +336,24 @@
   font-weight: 600;
 }
 
+.rb-designation {
+  margin: 20px 0;
+  border-left: 2px solid #e8ebf0;
+  padding-left: 18px;
+}
+
+.resume-app .rb-checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  justify-content: start;
+}
+
+.resume-app .rb-checkbox input {
+  width: 16px;
+  margin: 0;
+  accent-color: var(--rb-accent);
+}
+
 .resume-app .rb-link {
   border: 0;
   padding: 4px 0;
@@ -377,13 +395,17 @@
 .rb-paper .rb-role {
   margin-top: 4px;
   color: var(--rb-accent);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .rb-paper .rb-contact {
   margin-top: 6px;
   color: #677384;
+}
+
+.rb-paper .rb-contact--social {
+  overflow-wrap: anywhere;
 }
 
 .rb-paper h2 {
@@ -401,6 +423,93 @@
   font-size: 14px;
 }
 
+.rb-paper h4 {
+  margin: 12px 0 3px;
+  font-size: 12px;
+}
+
+.rb-designation-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 12px 0 3px;
+}
+
+.rb-designation-header h4 {
+  margin: 0;
+  min-width: 0;
+  text-align: left;
+}
+
+.rb-designation-duration {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #677384;
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.rb-paper ul {
+  margin: 5px 0 10px;
+  padding-left: 18px;
+}
+
+.rb-paper li {
+  margin-bottom: 3px;
+}
+
+.rb-skill-groups--columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+
+.rb-skill-groups h3 {
+  margin-top: 12px;
+}
+
+.rb-resume-entry {
+  break-inside: auto;
+}
+
+.rb-experience-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 17px 0 4px;
+}
+
+.rb-experience-company {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  text-align: left;
+}
+
+.rb-experience-company h3 {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.rb-experience-location {
+  color: #677384;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.rb-experience-duration {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #677384;
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
 .rb-paper p {
   margin: 0;
   overflow-wrap: anywhere;
@@ -414,6 +523,27 @@
 .rb-paper .rb-meta {
   margin-bottom: 4px;
   color: #677384;
+}
+
+.rb-education-footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  color: #677384;
+  font-size: 12px;
+}
+
+.rb-education-location {
+  min-width: 0;
+  text-align: left;
+}
+
+.rb-education-details {
+  flex-shrink: 0;
+  margin-left: auto;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .rb-done-tip {
@@ -471,6 +601,10 @@
     padding: 24px;
   }
 
+  .rb-skill-groups--columns {
+    grid-template-columns: 1fr;
+  }
+
   .rb-intro {
     padding: 32px 20px 0;
   }
@@ -481,7 +615,7 @@
 }
 
 @page {
-  margin: 14mm;
+  margin: 8mm;
 }
 
 @media print {
@@ -506,10 +640,21 @@
     top: 0;
     left: 0;
     width: 100%;
+    border: 0;
+    padding: 4mm;
+    box-shadow: none;
+    font-size: 10pt;
+    line-height: 1.45;
   }
 
-  #printArea .rb-paper {
-    border: 0;
-    padding: 0;
+  #printArea h2,
+  #printArea h3,
+  #printArea h4 {
+    break-after: avoid-page;
+  }
+
+  #printArea .rb-resume-entry,
+  #printArea li {
+    break-inside: auto;
   }
 }

@@ -58,224 +58,48 @@
           <h2 ref="stepHeading" tabindex="-1">{{ currentStep.title }}</h2>
           <p class="rb-card-sub">{{ currentStep.sub }}</p>
 
-          <div v-if="step === 1" class="rb-fields">
-            <label class="rb-field">
-              <span>Full name</span>
-              <input
-                id="f-p-name"
-                v-model="state.p.name"
-                autocomplete="name"
-                placeholder="e.g. Alex Morgan"
-                :aria-invalid="showErrors && !state.p.name.trim()"
-                aria-describedby="err-f-p-name"
-                @keydown.enter.prevent="continueStep"
-              />
-              <span id="err-f-p-name" class="rb-err" role="alert">
-                {{ showErrors && !state.p.name.trim() ? 'Please enter your name.' : '' }}
-              </span>
-            </label>
-            <label class="rb-field">
-              <span>Job title</span>
-              <input v-model="state.p.title" placeholder="e.g. Product Designer" />
-            </label>
-            <label class="rb-field">
-              <span>Email</span>
-              <input
-                id="f-p-email"
-                v-model="state.p.email"
-                type="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-                :aria-invalid="showErrors && !isEmailValid"
-                aria-describedby="err-f-p-email"
-                @keydown.enter.prevent="continueStep"
-              />
-              <span id="err-f-p-email" class="rb-err" role="alert">
-                {{ showErrors ? emailError : '' }}
-              </span>
-            </label>
-            <label class="rb-field">
-              <span>Phone</span>
-              <input
-                v-model="state.p.phone"
-                type="tel"
-                autocomplete="tel"
-                placeholder="+1 555 000 0000"
-              />
-            </label>
-            <label class="rb-field">
-              <span>Location</span>
-              <input
-                v-model="state.p.location"
-                autocomplete="address-level2"
-                placeholder="City, Country"
-              />
-            </label>
-            <label class="rb-field">
-              <span>Website or LinkedIn</span>
-              <input v-model="state.p.website" placeholder="linkedin.com/in/yourname" />
-            </label>
-          </div>
-
-          <div v-else-if="step === 2" class="rb-fields">
-            <section
-              v-for="(experience, index) in state.exp"
-              :key="index"
-              class="rb-repeat full"
-            >
-              <div class="rb-repeat-head">
-                <b>Role {{ index + 1 }}</b>
-                <button
-                  v-if="state.exp.length > 1"
-                  class="rb-link"
-                  type="button"
-                  @click="removeEntry('exp', index)"
-                >
-                  Remove
-                </button>
-              </div>
-              <div class="rb-fields">
-                <label class="rb-field">
-                  <span>Job title</span>
-                  <input v-model="experience.title" placeholder="e.g. Senior Designer" />
-                </label>
-                <label class="rb-field">
-                  <span>Company</span>
-                  <input v-model="experience.company" placeholder="e.g. Studio Labs" />
-                </label>
-                <label class="rb-field">
-                  <span>Location</span>
-                  <input v-model="experience.location" placeholder="City, Country" />
-                </label>
-                <label class="rb-field">
-                  <span>Start date</span>
-                  <input v-model="experience.start" placeholder="e.g. Jan 2022" />
-                </label>
-                <label class="rb-field">
-                  <span>End date</span>
-                  <input v-model="experience.end" placeholder="e.g. Dec 2024, or Present" />
-                </label>
-                <label class="rb-field full">
-                  <span>What did you achieve?</span>
-                  <textarea
-                    v-model="experience.desc"
-                    rows="4"
-                    placeholder="Led a team of 4 designers. Improved onboarding completion by 32%."
-                  ></textarea>
-                </label>
-              </div>
-            </section>
-            <div class="rb-field full">
-              <button class="rb-add" type="button" @click="addEntry('exp')">
-                + Add another role
-              </button>
-            </div>
-          </div>
-
-          <div v-else-if="step === 3" class="rb-fields">
-            <section v-for="(education, index) in state.edu" :key="index" class="rb-repeat full">
-              <div class="rb-repeat-head">
-                <b>Education {{ index + 1 }}</b>
-                <button
-                  v-if="state.edu.length > 1"
-                  class="rb-link"
-                  type="button"
-                  @click="removeEntry('edu', index)"
-                >
-                  Remove
-                </button>
-              </div>
-              <div class="rb-fields">
-                <label class="rb-field">
-                  <span>Degree or course</span>
-                  <input v-model="education.degree" placeholder="e.g. BFA, Interaction Design" />
-                </label>
-                <label class="rb-field">
-                  <span>School</span>
-                  <input
-                    v-model="education.school"
-                    placeholder="e.g. California College of the Arts"
-                  />
-                </label>
-                <label class="rb-field">
-                  <span>Start year</span>
-                  <input v-model="education.start" placeholder="e.g. 2016" />
-                </label>
-                <label class="rb-field">
-                  <span>End year</span>
-                  <input v-model="education.end" placeholder="e.g. 2020, or Present" />
-                </label>
-              </div>
-            </section>
-            <div class="rb-field full">
-              <button class="rb-add" type="button" @click="addEntry('edu')">+ Add another</button>
-            </div>
-          </div>
-
-          <div v-else-if="step === 4" class="rb-fields">
-            <label class="rb-field full">
-              <span>Professional summary</span>
-              <textarea
-                v-model="state.summary"
-                rows="4"
-                placeholder="Write 2–3 sentences about your experience, strengths, and what you’re looking for."
-              ></textarea>
-            </label>
-            <label class="rb-field full">
-              <span>Skills</span>
-              <textarea
-                v-model="state.skills"
-                rows="4"
-                placeholder="e.g. Project management, Figma, Python, Communication"
-              ></textarea>
-            </label>
-            <span class="rb-small full">Separate your skills with commas.</span>
-          </div>
-
-          <div v-else class="rb-preview">
-            <div id="printArea" class="rb-paper">
-              <h1>{{ state.p.name.trim() || 'Your name' }}</h1>
-              <div v-if="state.p.title" class="rb-role">{{ state.p.title }}</div>
-              <div v-if="contactDetails.length" class="rb-contact">
-                {{ contactDetails.join('  ·  ') }}
-              </div>
-
-              <template v-if="state.summary.trim()">
-                <h2>Profile</h2>
-                <p class="rb-resume-copy">{{ state.summary.trim() }}</p>
-              </template>
-
-              <template v-if="completedExperience.length">
-                <h2>Experience</h2>
-                <template v-for="(experience, index) in completedExperience" :key="index">
-                  <h3>{{ experience.title || experience.company }}</h3>
-                  <div v-if="experienceMeta(experience)" class="rb-meta">
-                    {{ experienceMeta(experience) }}
-                  </div>
-                  <p v-if="experience.desc.trim()">{{ experience.desc.trim() }}</p>
-                </template>
-              </template>
-
-              <template v-if="completedEducation.length">
-                <h2>Education</h2>
-                <template v-for="(education, index) in completedEducation" :key="index">
-                  <h3>{{ education.degree || education.school }}</h3>
-                  <div v-if="educationMeta(education)" class="rb-meta">
-                    {{ educationMeta(education) }}
-                  </div>
-                </template>
-              </template>
-
-              <template v-if="skillList.length">
-                <h2>Skills</h2>
-                <p class="rb-resume-copy">{{ skillList.join('  ·  ') }}</p>
-              </template>
-            </div>
-            <div class="rb-done-tip">
-              <span class="rb-small">Tip: in the print window, choose “Save as PDF” as the destination.</span>
-              <button class="rb-link" type="button" @click="restart">Start over</button>
-            </div>
-          </div>
+          <PersonalDetails
+            v-if="step === 1"
+            v-model="state.header"
+            :show-errors="showErrors"
+            :is-email-valid="isEmailValid"
+            :email-error="emailError"
+          />
+          <SkillsSummary
+            v-else-if="step === 2"
+            v-model:summary="state.summary"
+            v-model:skills="state.skills"
+            v-model:config="state.config"
+          />
+          <ExperienceStep
+            v-else-if="step === 3"
+            v-model="state.experiences"
+            @add="addEntry('experience')"
+            @remove="removeEntry('experience', $event)"
+          />
+          <ProjectStep
+            v-else-if="step === 4"
+            v-model="state.projects"
+            @add="addEntry('project')"
+            @remove="removeEntry('project', $event)"
+          />
+          <EducationStep
+            v-else-if="step === 5"
+            v-model="state.educations"
+            @add="addEntry('education')"
+            @remove="removeEntry('education', $event)"
+          />
+          <ResumePreview
+            v-else
+            :header="state.header"
+            :experiences="state.experiences"
+            :projects="state.projects"
+            :educations="state.educations"
+            :summary="state.summary"
+            :skills="state.skills"
+            :config="state.config"
+            @restart="restart"
+          />
 
           <div v-if="storageError" class="rb-storage-error" role="alert">
             {{ storageError }}
@@ -289,8 +113,12 @@
             >
               Back
             </button>
-            <button class="rb-btn-primary" :type="step === 5 ? 'button' : 'submit'" @click="step === 5 && printResume()">
-              {{ step === 4 ? 'Generate resume' : step === 5 ? 'Download PDF' : 'Continue' }}
+            <button
+              class="rb-btn-primary"
+              :type="step === 6 ? 'button' : 'submit'"
+              @click="step === 6 && printResume()"
+            >
+              {{ step === 5 ? 'Generate resume' : step === 6 ? 'Download PDF' : 'Continue' }}
             </button>
           </div>
         </form>
@@ -303,42 +131,22 @@
 
 <script setup lang="ts">
 import { computed, nextTick, reactive, ref, watch } from 'vue'
+import EducationStep from '@/components/builder/EducationStep.vue'
+import ExperienceStep from '@/components/builder/ExperienceStep.vue'
+import PersonalDetails from '@/components/builder/PersonalDetails.vue'
+import ProjectStep from '@/components/builder/ProjectStep.vue'
+import ResumePreview from '@/components/builder/ResumePreview.vue'
+import SkillsSummary from '@/components/builder/SkillsSummary.vue'
+import type {
+  BuilderState,
+  DesignationEntry,
+  EducationEntry,
+  ExperienceEntry,
+  ProjectEntry,
+  SkillGroup,
+} from '@/types/builder'
 
 defineOptions({ name: 'ResumeBuilder' })
-
-interface PersonalDetails {
-  name: string
-  title: string
-  email: string
-  phone: string
-  location: string
-  website: string
-}
-
-interface Experience {
-  title: string
-  company: string
-  location: string
-  start: string
-  end: string
-  desc: string
-}
-
-interface Education {
-  degree: string
-  school: string
-  start: string
-  end: string
-}
-
-interface BuilderState {
-  step: number
-  p: PersonalDetails
-  exp: Experience[]
-  edu: Education[]
-  summary: string
-  skills: string
-}
 
 const storageKey = 'resumecraft.v1'
 const steps = [
@@ -349,22 +157,28 @@ const steps = [
     sub: 'Your name and contact details sit at the top of your resume.',
   },
   {
+    label: 'Skills & summary',
+    kicker: 'The finishing touches',
+    title: 'Show what sets you apart.',
+    sub: 'Bring it together with your strengths and a short introduction.',
+  },
+  {
     label: 'Experience',
     kicker: 'Where you’ve been',
     title: 'Share your experience.',
-    sub: 'Add your most recent role first and focus on what you achieved.',
+    sub: 'Add your most recent roles and focus on what you achieved.',
+  },
+  {
+    label: 'Project',
+    kicker: 'Work you’re proud of',
+    title: 'Showcase your projects.',
+    sub: 'Highlight the projects, contributions, and technologies that make your work stand out.',
   },
   {
     label: 'Education',
     kicker: 'Your foundation',
     title: 'Add your education.',
-    sub: 'Degrees, courses and certifications that back up your story.',
-  },
-  {
-    label: 'Skills & summary',
-    kicker: 'The finishing touches',
-    title: 'Show what sets you apart.',
-    sub: 'Bring it together with your strengths and a short introduction.',
+    sub: 'Include your institution, location, year, and results.',
   },
   {
     label: 'Review & download',
@@ -374,22 +188,38 @@ const steps = [
   },
 ]
 
-function blankExperience(): Experience {
-  return { title: '', company: '', location: '', start: '', end: '', desc: '' }
+function blankDesignation(): DesignationEntry {
+  return { title: '', current: false, promoted: false, duration: '', responsibilities: [''] }
 }
 
-function blankEducation(): Education {
-  return { degree: '', school: '', start: '', end: '' }
+function blankExperience(): ExperienceEntry {
+  return {
+    company: '',
+    url: '',
+    location: '',
+    totalDuration: '',
+    designations: [blankDesignation()],
+  }
+}
+
+function blankProject(): ProjectEntry {
+  return { name: '', description: '', techStack: [] }
+}
+
+function blankEducation(): EducationEntry {
+  return { title: '', institution: '', location: '', year: '', percentage: '' }
 }
 
 function freshState(): BuilderState {
   return {
     step: 1,
-    p: { name: '', title: '', email: '', phone: '', location: '', website: '' },
-    exp: [blankExperience()],
-    edu: [blankEducation()],
+    header: { name: '', title: '', email: '', phone: '', location: '', linkedin: '', github: '' },
     summary: '',
-    skills: '',
+    config: { enableGridColumn: true },
+    skills: [{ title: '', skills: [''] }],
+    experiences: [blankExperience()],
+    projects: [blankProject()],
+    educations: [blankEducation()],
   }
 }
 
@@ -401,25 +231,71 @@ function text(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
-function readExperience(value: unknown): Experience {
+function textArray(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : []
+}
+
+function readDesignation(value: unknown): DesignationEntry {
   const record = isRecord(value) ? value : {}
   return {
     title: text(record.title),
-    company: text(record.company),
-    location: text(record.location),
-    start: text(record.start),
-    end: text(record.end),
-    desc: text(record.desc),
+    current: record.current === true,
+    promoted: record.promoted === true,
+    duration: text(record.duration),
+    responsibilities: textArray(record.responsibilities),
   }
 }
 
-function readEducation(value: unknown): Education {
+function readExperience(value: unknown): ExperienceEntry {
+  const record = isRecord(value) ? value : {}
+  const designations = Array.isArray(record.designations) && record.designations.length
+    ? record.designations.map(readDesignation)
+    : [
+        {
+          ...blankDesignation(),
+          title: text(record.title),
+          duration: [text(record.start), text(record.end)].filter(Boolean).join(' – '),
+          responsibilities: textArray(record.responsibilities).length
+            ? textArray(record.responsibilities)
+            : text(record.desc)
+                .split('\n')
+                .map((item) => item.trim())
+                .filter(Boolean),
+        },
+      ]
+  return {
+    company: text(record.company),
+    url: text(record.url),
+    location: text(record.location),
+    totalDuration: text(record.totalDuration),
+    designations,
+  }
+}
+
+function readEducation(value: unknown): EducationEntry {
   const record = isRecord(value) ? value : {}
   return {
-    degree: text(record.degree),
-    school: text(record.school),
-    start: text(record.start),
-    end: text(record.end),
+    title: text(record.title) || text(record.degree),
+    institution: text(record.institution) || text(record.school),
+    location: text(record.location),
+    year:
+      text(record.year) ||
+      [text(record.start), text(record.end)].filter(Boolean).join(' – '),
+    percentage: text(record.percentage),
+  }
+}
+
+function readSkillGroup(value: unknown): SkillGroup {
+  const record = isRecord(value) ? value : {}
+  return { title: text(record.title), skills: textArray(record.skills) }
+}
+
+function readProject(value: unknown): ProjectEntry {
+  const record = isRecord(value) ? value : {}
+  return {
+    name: text(record.name),
+    description: text(record.description),
+    techStack: textArray(record.techStack),
   }
 }
 
@@ -433,27 +309,46 @@ function loadState(): BuilderState {
     const parsed: unknown = JSON.parse(saved)
     if (!isRecord(parsed)) throw new Error('Saved resume data is not an object.')
 
-    const personal = isRecord(parsed.p) ? parsed.p : {}
-    const experience = Array.isArray(parsed.exp) ? parsed.exp.map(readExperience) : []
-    const education = Array.isArray(parsed.edu) ? parsed.edu.map(readEducation) : []
+    const header = isRecord(parsed.header)
+      ? parsed.header
+      : isRecord(parsed.p)
+        ? parsed.p
+        : {}
+    const experience = Array.isArray(parsed.experiences)
+      ? parsed.experiences.map(readExperience)
+      : Array.isArray(parsed.exp)
+        ? parsed.exp.map(readExperience)
+        : []
+    const education = Array.isArray(parsed.educations) ? parsed.educations.map(readEducation) : []
+    const skillGroups = Array.isArray(parsed.skills)
+      ? parsed.skills.map(readSkillGroup)
+      : text(parsed.skills).trim()
+        ? [{ title: 'Skills', skills: text(parsed.skills).split(',').map((skill) => skill.trim()).filter(Boolean) }]
+        : []
+    const config = isRecord(parsed.config) ? parsed.config : {}
     const step = typeof parsed.step === 'number' && Number.isInteger(parsed.step)
-      ? Math.min(5, Math.max(1, parsed.step))
+      ? Math.min(6, Math.max(1, parsed.step))
       : 1
 
     return {
       step,
-      p: {
-        name: text(personal.name),
-        title: text(personal.title),
-        email: text(personal.email),
-        phone: text(personal.phone),
-        location: text(personal.location),
-        website: text(personal.website),
+      header: {
+        name: text(header.name),
+        title: text(header.title),
+        email: text(header.email),
+        phone: text(header.phone),
+        location: text(header.location),
+        linkedin: text(header.linkedin) || text(header.website),
+        github: text(header.github),
       },
-      exp: experience.length ? experience : [blankExperience()],
-      edu: education.length ? education : [blankEducation()],
       summary: text(parsed.summary),
-      skills: text(parsed.skills),
+      config: { enableGridColumn: config.enableGridColumn !== false },
+      skills: skillGroups.length ? skillGroups : [{ title: '', skills: [''] }],
+      experiences: experience.length ? experience : [blankExperience()],
+      projects: Array.isArray(parsed.projects) && parsed.projects.length
+        ? parsed.projects.map(readProject)
+        : [blankProject()],
+      educations: education.length ? education : [blankEducation()],
     }
   } catch (error) {
     console.error('Unable to load saved resume data.', error)
@@ -466,28 +361,13 @@ const state = reactive(loadState())
 const step = computed(() => state.step)
 const currentStep = computed(() => steps[state.step - 1]!)
 const progress = computed(() => Math.round(((state.step - 1) / (steps.length - 1)) * 100))
-const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.p.email.trim()))
+const isEmailValid = computed(() => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(state.header.email.trim()))
 const emailError = computed(() => {
-  if (!state.p.email.trim()) return 'Please enter your email.'
+  if (!state.header.email.trim()) return 'Please enter your email.'
   return isEmailValid.value ? '' : 'That email doesn’t look right.'
 })
 const showErrors = ref(false)
 const stepHeading = ref<HTMLHeadingElement | null>(null)
-
-const contactDetails = computed(() =>
-  [state.p.location, state.p.email, state.p.phone, state.p.website]
-    .map((item) => item.trim())
-    .filter(Boolean),
-)
-const completedExperience = computed(() =>
-  state.exp.filter((entry) => entry.title.trim() || entry.company.trim() || entry.desc.trim()),
-)
-const completedEducation = computed(() =>
-  state.edu.filter((entry) => entry.degree.trim() || entry.school.trim()),
-)
-const skillList = computed(() =>
-  state.skills.split(',').map((skill) => skill.trim()).filter(Boolean),
-)
 
 watch(
   state,
@@ -505,7 +385,7 @@ watch(
 
 async function goToStep(target: number) {
   const nextStep = Math.min(steps.length, Math.max(1, target))
-  if (nextStep > 1 && (!state.p.name.trim() || !isEmailValid.value)) {
+  if (nextStep > 1 && (!state.header.name.trim() || !isEmailValid.value)) {
     state.step = 1
     showErrors.value = true
     await focusFirstInvalidField()
@@ -528,7 +408,7 @@ async function focusFirstInvalidField() {
 }
 
 function continueStep() {
-  if (state.step === 1 && (!state.p.name.trim() || !isEmailValid.value)) {
+  if (state.step === 1 && (!state.header.name.trim() || !isEmailValid.value)) {
     showErrors.value = true
     void focusFirstInvalidField()
     return
@@ -536,38 +416,29 @@ function continueStep() {
   if (state.step < steps.length) void goToStep(state.step + 1)
 }
 
-function addEntry(kind: 'exp' | 'edu') {
-  if (kind === 'exp') state.exp.push(blankExperience())
-  else state.edu.push(blankEducation())
+type EntryKind = 'experience' | 'project' | 'education'
+
+function addEntry(kind: EntryKind) {
+  if (kind === 'experience') state.experiences.push(blankExperience())
+  else if (kind === 'project') state.projects.push(blankProject())
+  else state.educations.push(blankEducation())
   void nextTick(() => {
     const groups = document.querySelectorAll<HTMLElement>('.rb-repeat')
     groups.item(groups.length - 1)?.querySelector('input')?.focus()
   })
 }
 
-function removeEntry(kind: 'exp' | 'edu', index: number) {
-  if (kind === 'exp') {
-    state.exp.splice(index, 1)
-    if (!state.exp.length) state.exp.push(blankExperience())
+function removeEntry(kind: EntryKind, index: number) {
+  if (kind === 'experience') {
+    state.experiences.splice(index, 1)
+    if (!state.experiences.length) state.experiences.push(blankExperience())
+  } else if (kind === 'project') {
+    state.projects.splice(index, 1)
+    if (!state.projects.length) state.projects.push(blankProject())
   } else {
-    state.edu.splice(index, 1)
-    if (!state.edu.length) state.edu.push(blankEducation())
+    state.educations.splice(index, 1)
+    if (!state.educations.length) state.educations.push(blankEducation())
   }
-}
-
-function joinNonEmpty(values: string[], separator: string) {
-  return values.map((value) => value.trim()).filter(Boolean).join(separator)
-}
-
-function experienceMeta(entry: Experience) {
-  const organization = joinNonEmpty([entry.company, entry.location], ' · ')
-  const dates = joinNonEmpty([entry.start, entry.end], ' – ')
-  return joinNonEmpty([organization, dates], '   |   ')
-}
-
-function educationMeta(entry: Education) {
-  const years = joinNonEmpty([entry.start, entry.end], ' – ')
-  return joinNonEmpty([entry.school, years], '   |   ')
 }
 
 function restart() {
@@ -578,7 +449,7 @@ function restart() {
 
 function printResume() {
   const previousTitle = document.title
-  document.title = `${state.p.name.trim() || 'Resume'} – Resume`
+  document.title = `${state.header.name.trim() || 'Resume'} – Resume`
   const restoreTitle = () => {
     document.title = previousTitle
     window.removeEventListener('afterprint', restoreTitle)
