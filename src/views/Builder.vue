@@ -40,7 +40,24 @@
       <main class="rb-main">
         <div class="rb-progress-meta">
           <span>STEP {{ step }} OF {{ steps.length }}</span>
-          <span>{{ progress }}% through the steps</span>
+          <div class="rb-progress-actions">
+            <span>{{ progress }}% through the steps</span>
+            <button
+              class="rb-save-button"
+              type="button"
+              :disabled="saveBusy"
+              :aria-label="saveButtonLabel"
+              :title="saveButtonLabel"
+              @click="saveResume"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M5 3h12l4 4v14H3V3h2Zm2 0v6h10V3M7 21v-7h10v7"
+                />
+              </svg>
+              <span>{{ saveBusy ? 'Saving…' : 'Save' }}</span>
+            </button>
+          </div>
         </div>
         <div
           class="rb-progress"
@@ -101,8 +118,40 @@
             @restart="restart"
           />
 
+          <section v-if="syncConflict" class="rb-sync-conflict" aria-labelledby="sync-conflict-title">
+            <h3 id="sync-conflict-title">Choose which resume to keep</h3>
+            <p>
+              Resume data exists on this device and in your Google account. Pull the cloud copy
+              into this browser, or sync this device’s copy to your account?
+            </p>
+            <div class="rb-sync-conflict-actions">
+              <button
+                class="rb-btn-ghost"
+                type="button"
+                :disabled="conflictActionBusy"
+                @click="resolveResumeConflict('cloud')"
+              >
+                Use Google account copy
+              </button>
+              <button
+                class="rb-btn-primary"
+                type="button"
+                :disabled="conflictActionBusy"
+                @click="resolveResumeConflict('local')"
+              >
+                Sync this device’s copy
+              </button>
+            </div>
+          </section>
+
+          <div v-if="saveStatus" class="rb-sync-note" role="status">
+            {{ saveStatus }}
+          </div>
           <div v-if="storageError" class="rb-storage-error" role="alert">
             {{ storageError }}
+          </div>
+          <div v-if="saveError" class="rb-storage-error" role="alert">
+            {{ saveError }}
           </div>
           <div class="rb-actions">
             <button
@@ -115,10 +164,19 @@
             </button>
             <button
               class="rb-btn-primary"
+              :disabled="step === 6 && resumeLoadBusy"
               :type="step === 6 ? 'button' : 'submit'"
               @click="step === 6 && printResume()"
             >
-              {{ step === 5 ? 'Generate resume' : step === 6 ? 'Download PDF' : 'Continue' }}
+              {{
+                step === 6 && resumeLoadBusy
+                  ? 'Loading saved resume…'
+                  : step === 5
+                    ? 'Generate resume'
+                    : step === 6
+                      ? 'Download PDF'
+                      : 'Continue'
+              }}
             </button>
           </div>
         </form>
@@ -130,13 +188,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onAuthStateChanged, type User } from 'firebase/auth'
 import EducationStep from '@/components/builder/EducationStep.vue'
 import ExperienceStep from '@/components/builder/ExperienceStep.vue'
 import PersonalDetails from '@/components/builder/PersonalDetails.vue'
 import ProjectStep from '@/components/builder/ProjectStep.vue'
 import ResumePreview from '@/components/builder/ResumePreview.vue'
 import SkillsSummary from '@/components/builder/SkillsSummary.vue'
+import { getFirebaseAuth } from '@/services/firebaseAuth'
+import { isFirebaseConfigured } from '@/services/firebaseConfig'
 import type {
   BuilderState,
   DesignationEntry,
@@ -301,55 +362,95 @@ function readProject(value: unknown): ProjectEntry {
 
 const storageError = ref('')
 
+function parseResumeState(value: unknown): BuilderState {
+  if (!isRecord(value)) throw new Error('Saved resume data is not an object.')
+
+  const header = isRecord(value.header)
+    ? value.header
+    : isRecord(value.p)
+      ? value.p
+      : {}
+  const experience = Array.isArray(value.experiences)
+    ? value.experiences.map(readExperience)
+    : Array.isArray(value.exp)
+      ? value.exp.map(readExperience)
+      : []
+  const education = Array.isArray(value.educations) ? value.educations.map(readEducation) : []
+  const skillGroups = Array.isArray(value.skills)
+    ? value.skills.map(readSkillGroup)
+    : text(value.skills).trim()
+      ? [{ title: 'Skills', skills: text(value.skills).split(',').map((skill) => skill.trim()).filter(Boolean) }]
+      : []
+  const config = isRecord(value.config) ? value.config : {}
+  const step = typeof value.step === 'number' && Number.isInteger(value.step)
+    ? Math.min(6, Math.max(1, value.step))
+    : 1
+
+  return {
+    step,
+    header: {
+      name: text(header.name),
+      title: text(header.title),
+      email: text(header.email),
+      phone: text(header.phone),
+      location: text(header.location),
+      linkedin: text(header.linkedin) || text(header.website),
+      github: text(header.github),
+    },
+    summary: text(value.summary),
+    config: { enableGridColumn: config.enableGridColumn !== false },
+    skills: skillGroups.length ? skillGroups : [{ title: '', skills: [''] }],
+    experiences: experience.length ? experience : [blankExperience()],
+    projects: Array.isArray(value.projects) && value.projects.length
+      ? value.projects.map(readProject)
+      : [blankProject()],
+    educations: education.length ? education : [blankEducation()],
+  }
+}
+
+function hasResumeContent(value: BuilderState) {
+  return (
+    Object.values(value.header).some((item) => item.trim()) ||
+    value.summary.trim().length > 0 ||
+    value.skills.some(
+      (group) => group.title.trim() || group.skills.some((skill) => skill.trim()),
+    ) ||
+    value.experiences.some(
+      (experience) =>
+        experience.company.trim() ||
+        experience.url.trim() ||
+        experience.location.trim() ||
+        experience.totalDuration.trim() ||
+        experience.designations.some(
+          (designation) =>
+            designation.title.trim() ||
+            designation.duration.trim() ||
+            designation.responsibilities.some((item) => item.trim()),
+        ),
+    ) ||
+    value.projects.some(
+      (project) =>
+        project.name.trim() ||
+        project.description.trim() ||
+        project.techStack.some((item) => item.trim()),
+    ) ||
+    value.educations.some(
+      (education) =>
+        education.title.trim() ||
+        education.institution.trim() ||
+        education.location.trim() ||
+        education.year.trim() ||
+        education.percentage.trim(),
+    )
+  )
+}
+
 function loadState(): BuilderState {
   try {
     const saved = localStorage.getItem(storageKey)
     if (!saved) return freshState()
 
-    const parsed: unknown = JSON.parse(saved)
-    if (!isRecord(parsed)) throw new Error('Saved resume data is not an object.')
-
-    const header = isRecord(parsed.header)
-      ? parsed.header
-      : isRecord(parsed.p)
-        ? parsed.p
-        : {}
-    const experience = Array.isArray(parsed.experiences)
-      ? parsed.experiences.map(readExperience)
-      : Array.isArray(parsed.exp)
-        ? parsed.exp.map(readExperience)
-        : []
-    const education = Array.isArray(parsed.educations) ? parsed.educations.map(readEducation) : []
-    const skillGroups = Array.isArray(parsed.skills)
-      ? parsed.skills.map(readSkillGroup)
-      : text(parsed.skills).trim()
-        ? [{ title: 'Skills', skills: text(parsed.skills).split(',').map((skill) => skill.trim()).filter(Boolean) }]
-        : []
-    const config = isRecord(parsed.config) ? parsed.config : {}
-    const step = typeof parsed.step === 'number' && Number.isInteger(parsed.step)
-      ? Math.min(6, Math.max(1, parsed.step))
-      : 1
-
-    return {
-      step,
-      header: {
-        name: text(header.name),
-        title: text(header.title),
-        email: text(header.email),
-        phone: text(header.phone),
-        location: text(header.location),
-        linkedin: text(header.linkedin) || text(header.website),
-        github: text(header.github),
-      },
-      summary: text(parsed.summary),
-      config: { enableGridColumn: config.enableGridColumn !== false },
-      skills: skillGroups.length ? skillGroups : [{ title: '', skills: [''] }],
-      experiences: experience.length ? experience : [blankExperience()],
-      projects: Array.isArray(parsed.projects) && parsed.projects.length
-        ? parsed.projects.map(readProject)
-        : [blankProject()],
-      educations: education.length ? education : [blankEducation()],
-    }
+    return parseResumeState(JSON.parse(saved))
   } catch (error) {
     console.error('Unable to load saved resume data.', error)
     storageError.value = 'Saved resume data could not be loaded. Your new changes will still be saved.'
@@ -368,10 +469,95 @@ const emailError = computed(() => {
 })
 const showErrors = ref(false)
 const stepHeading = ref<HTMLHeadingElement | null>(null)
+const signedInUser = ref<User | null>(null)
+const saveBusy = ref(false)
+const saveStatus = ref('')
+const saveError = ref('')
+const resumeLoadBusy = ref(false)
+const syncConflict = ref(false)
+const conflictActionBusy = ref(false)
+const pendingCloudResume = ref<BuilderState | null>(null)
+const saveButtonLabel = computed(() =>
+  signedInUser.value ? 'Save locally and sync to your Google account' : 'Save resume in this browser',
+)
+
+let unsubscribeAuth: (() => void) | undefined
+let resumeLoadRequest = 0
+
+onMounted(() => {
+  if (!isFirebaseConfigured()) return
+
+  try {
+    resumeLoadBusy.value = true
+    unsubscribeAuth = onAuthStateChanged(getFirebaseAuth(), async (user) => {
+      const requestId = ++resumeLoadRequest
+      signedInUser.value = user
+      pendingCloudResume.value = null
+      syncConflict.value = false
+      saveStatus.value = ''
+      saveError.value = ''
+      if (!user) {
+        resumeLoadBusy.value = false
+        return
+      }
+
+      try {
+        const { loadResumeForUser, saveResumeForUser } = await import('@/services/firebase')
+        const savedResume = await loadResumeForUser(user)
+        if (
+          requestId !== resumeLoadRequest ||
+          getFirebaseAuth().currentUser?.uid !== user.uid
+        ) {
+          return
+        }
+
+        const cloudState = savedResume === null ? null : parseResumeState(savedResume)
+        const localExists = hasResumeContent(state)
+        const cloudExists = cloudState !== null && hasResumeContent(cloudState)
+
+        if (localExists && cloudExists) {
+          pendingCloudResume.value = { ...cloudState, step: steps.length }
+          syncConflict.value = true
+          saveStatus.value = 'Choose which resume copy you want to keep.'
+          return
+        }
+
+        if (!cloudExists) {
+          if (localExists) {
+            await saveResumeForUser(user, state)
+            if (getFirebaseAuth().currentUser?.uid !== user.uid) return
+            saveStatus.value =
+              'No cloud resume existed, so your current draft was synced to your Google account.'
+          } else {
+            saveStatus.value = 'Signed in. No cloud resume was found; your current draft is ready.'
+          }
+          return
+        }
+
+        await useCloudResume({ ...cloudState, step: steps.length })
+      } catch (error) {
+        if (requestId !== resumeLoadRequest) return
+        console.error('Unable to load resume from Firestore.', error)
+        saveError.value = getSaveErrorMessage(error)
+      } finally {
+        if (requestId === resumeLoadRequest) resumeLoadBusy.value = false
+      }
+    })
+  } catch (error) {
+    console.error('Unable to initialize Firebase authentication.', error)
+    resumeLoadBusy.value = false
+  }
+})
+
+onUnmounted(() => {
+  unsubscribeAuth?.()
+})
 
 watch(
   state,
   () => {
+    saveStatus.value = ''
+    saveError.value = ''
     try {
       localStorage.setItem(storageKey, JSON.stringify(state))
       storageError.value = ''
@@ -459,6 +645,109 @@ function printResume() {
   window.addEventListener('afterprint', restoreTitle, { once: true })
   window.print()
 }
+
+async function useCloudResume(cloudResume: BuilderState) {
+  const restoredState = { ...cloudResume, step: steps.length }
+  Object.assign(state, restoredState)
+  showErrors.value = false
+  syncConflict.value = false
+  pendingCloudResume.value = null
+
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(restoredState))
+    storageError.value = ''
+  } catch (error) {
+    console.error('Unable to replace the local resume with cloud data.', error)
+    storageError.value =
+      'Your cloud resume was loaded, but could not replace the saved copy in this browser.'
+  }
+
+  await nextTick()
+  saveStatus.value = 'Your resume was loaded from your Google account. You can review or download it now.'
+}
+
+async function resolveResumeConflict(source: 'cloud' | 'local') {
+  if (conflictActionBusy.value || !signedInUser.value) return
+
+  conflictActionBusy.value = true
+  saveError.value = ''
+  const user = signedInUser.value
+
+  try {
+    if (source === 'cloud') {
+      if (!pendingCloudResume.value) {
+        throw new Error('The pending cloud resume is unavailable.')
+      }
+      await useCloudResume(pendingCloudResume.value)
+      return
+    }
+
+    await saveResumeForSignedInUser(user)
+    syncConflict.value = false
+    pendingCloudResume.value = null
+    saveStatus.value = 'This device’s resume was synced to your Google account.'
+  } catch (error) {
+    console.error('Unable to resolve local and cloud resume conflict.', error)
+    saveError.value = getSaveErrorMessage(error)
+  } finally {
+    conflictActionBusy.value = false
+  }
+}
+
+async function saveResumeForSignedInUser(user: User) {
+  const { saveResumeForUser } = await import('@/services/firebase')
+  await saveResumeForUser(user, state)
+}
+
+async function saveResume() {
+  if (saveBusy.value) return
+
+  saveBusy.value = true
+  saveError.value = ''
+  saveStatus.value = ''
+
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(state))
+    storageError.value = ''
+  } catch (error) {
+    console.error('Unable to save resume data locally.', error)
+    storageError.value = 'Your changes could not be saved in this browser.'
+    saveBusy.value = false
+    return
+  }
+
+  const user = signedInUser.value
+  if (!user) {
+    saveStatus.value = 'Saved on this device. Sign in with Google from the menu to sync it to Firestore.'
+    saveBusy.value = false
+    return
+  }
+
+  try {
+    await saveResumeForSignedInUser(user)
+    saveStatus.value = 'Saved on this device and synced to your Google account.'
+  } catch (error) {
+    console.error('Unable to sync resume to Firestore.', error)
+    saveError.value = getSaveErrorMessage(error)
+    saveStatus.value = 'Saved on this device, but cloud sync failed.'
+  } finally {
+    saveBusy.value = false
+  }
+}
+
+function getSaveErrorMessage(error: unknown) {
+  const code =
+    typeof error === 'object' && error !== null && 'code' in error ? error.code : undefined
+
+  if (code === 'permission-denied') {
+    return 'Firebase denied access to your resume. Please check the Firestore security rules.'
+  }
+  if (code === 'unavailable') {
+    return 'Firebase is temporarily unavailable. Please try syncing again.'
+  }
+  return 'Your resume could not be synced to Firebase. It is still saved in this browser; please retry.'
+}
+
 </script>
 
 <style src="../assets/builder.css"></style>

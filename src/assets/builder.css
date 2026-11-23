@@ -202,10 +202,45 @@
 
 .rb-progress-meta {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 11px;
   color: #9099a5;
   font-size: 11px;
+}
+
+.rb-progress-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rb-save-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  padding: 4px 7px;
+  border-radius: 6px;
+  background: #eaf0ff;
+  color: var(--rb-accent);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rb-save-button svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rb-save-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 .rb-progress {
@@ -308,6 +343,50 @@
   color: #fff;
   font-size: 13px;
   font-weight: 550;
+}
+
+.resume-app .rb-btn-primary:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.rb-sync-note {
+  margin-top: 20px;
+  color: #647083;
+  font-size: 13px;
+}
+
+.rb-sync-conflict {
+  margin-top: 20px;
+  border: 1px solid #d6e0f5;
+  border-radius: 8px;
+  padding: 16px;
+  background: #f7f9ff;
+}
+
+.rb-sync-conflict h3 {
+  margin: 0;
+  color: #202936;
+  font-size: 14px;
+}
+
+.rb-sync-conflict p {
+  margin: 8px 0 14px;
+  color: #647083;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.rb-sync-conflict-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.rb-sync-conflict-actions button:disabled {
+  cursor: wait;
+  opacity: 0.65;
 }
 
 .rb-foot-note {

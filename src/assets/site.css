@@ -56,6 +56,29 @@
   font-size: 13px;
 }
 
+.nav-auth,
+.mobile-menu-auth {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--blue);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-auth:disabled,
+.mobile-menu-auth:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.nav-auth-error {
+  color: #b42318;
+  font-size: 12px;
+}
+
 .nav-cta {
   min-height: 44px;
   display: inline-flex;
@@ -147,7 +170,8 @@
     box-shadow: 0 16px 36px rgba(20, 33, 61, 0.12);
   }
 
-  .mobile-menu > a {
+  .mobile-menu > a,
+  .mobile-menu > button {
     padding: 12px;
     border-radius: 7px;
     color: #14213d;
@@ -155,7 +179,14 @@
     font-size: 14px;
   }
 
-  .mobile-menu > a:not(.mobile-menu-cta):hover {
+  .mobile-menu > button {
+    border: 0;
+    background: transparent;
+    text-align: left;
+  }
+
+  .mobile-menu > a:not(.mobile-menu-cta):hover,
+  .mobile-menu > button:hover {
     background: #f5f8fd;
   }
 
